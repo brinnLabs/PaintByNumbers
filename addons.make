@@ -1,0 +1,5 @@
+ofxShivaVG
+ofxSplashScreen
+ofxSvg
+ofxUIUtils
+ofxXmlSettings

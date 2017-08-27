@@ -1,0 +1,276 @@
+<?xml version="1.0"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<ItemGroup>
+		<ClCompile Include="src\ofApp.cpp">
+			<Filter>src</Filter>
+		</ClCompile>
+		<ClCompile Include="src\main.cpp">
+			<Filter>src</Filter>
+		</ClCompile>
+		<ClCompile Include="src\main.cpp">
+			<Filter>src</Filter>
+		</ClCompile>
+		<ClCompile Include="src\ofApp.cpp">
+			<Filter>src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxShivaVG\src\ofxShivaVGRenderer.cpp">
+			<Filter>addons\ofxShivaVG\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxShivaVG\src\simpleVGContext.cpp">
+			<Filter>addons\ofxShivaVG\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxShivaVG\src\simpleVGPath.cpp">
+			<Filter>addons\ofxShivaVG\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxShivaVG\libs\ShivaVG\src\shArrays.c">
+			<Filter>addons\ofxShivaVG\libs\ShivaVG\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxShivaVG\libs\ShivaVG\src\shContext.c">
+			<Filter>addons\ofxShivaVG\libs\ShivaVG\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxShivaVG\libs\ShivaVG\src\shExtensions.c">
+			<Filter>addons\ofxShivaVG\libs\ShivaVG\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxShivaVG\libs\ShivaVG\src\shGeometry.c">
+			<Filter>addons\ofxShivaVG\libs\ShivaVG\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxShivaVG\libs\ShivaVG\src\shImage.c">
+			<Filter>addons\ofxShivaVG\libs\ShivaVG\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxShivaVG\libs\ShivaVG\src\shPaint.c">
+			<Filter>addons\ofxShivaVG\libs\ShivaVG\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxShivaVG\libs\ShivaVG\src\shParams.c">
+			<Filter>addons\ofxShivaVG\libs\ShivaVG\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxShivaVG\libs\ShivaVG\src\shPath.c">
+			<Filter>addons\ofxShivaVG\libs\ShivaVG\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxShivaVG\libs\ShivaVG\src\shPipeline.c">
+			<Filter>addons\ofxShivaVG\libs\ShivaVG\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxShivaVG\libs\ShivaVG\src\shVectors.c">
+			<Filter>addons\ofxShivaVG\libs\ShivaVG\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxShivaVG\libs\ShivaVG\src\shVgu.c">
+			<Filter>addons\ofxShivaVG\libs\ShivaVG\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxSplashScreen\src\ofxSplashScreen.cpp">
+			<Filter>addons\ofxSplashScreen\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxSvg\src\ofxSvg.cpp">
+			<Filter>addons\ofxSvg\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxSvg\libs\svgTiny\src\src_colors.cpp">
+			<Filter>addons\ofxSvg\libs\svgTiny\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxSvg\libs\svgTiny\src\svgtiny.cpp">
+			<Filter>addons\ofxSvg\libs\svgTiny\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxSvg\libs\svgTiny\src\svgtiny_gradient.cpp">
+			<Filter>addons\ofxSvg\libs\svgTiny\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxSvg\libs\svgTiny\src\svgtiny_list.cpp">
+			<Filter>addons\ofxSvg\libs\svgTiny\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxUIUtils\src\ofxClipboard.cpp">
+			<Filter>addons\ofxUIUtils\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxUIUtils\src\ofxColorPicker.cpp">
+			<Filter>addons\ofxUIUtils\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxUIUtils\src\ofxDropDownMenu.cpp">
+			<Filter>addons\ofxUIUtils\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxUIUtils\src\ofxImgButton.cpp">
+			<Filter>addons\ofxUIUtils\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxUIUtils\src\ofxTextInputField.cpp">
+			<Filter>addons\ofxUIUtils\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxUIUtils\src\ofxUIButton.cpp">
+			<Filter>addons\ofxUIUtils\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxUIUtils\src\ofxUISlider.cpp">
+			<Filter>addons\ofxUIUtils\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxXmlSettings\src\ofxXmlSettings.cpp">
+			<Filter>addons\ofxXmlSettings\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxXmlSettings\libs\tinyxml.cpp">
+			<Filter>addons\ofxXmlSettings\libs</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxXmlSettings\libs\tinyxmlerror.cpp">
+			<Filter>addons\ofxXmlSettings\libs</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxXmlSettings\libs\tinyxmlparser.cpp">
+			<Filter>addons\ofxXmlSettings\libs</Filter>
+		</ClCompile>
+	</ItemGroup>
+	<ItemGroup>
+		<Filter Include="src">
+			<UniqueIdentifier>{d8376475-7454-4a24-b08a-aac121d3ad6f}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons">
+			<UniqueIdentifier>{71834F65-F3A9-211E-73B8-DC85}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxShivaVG">
+			<UniqueIdentifier>{D52B5910-285E-8244-F3F5-D3B9}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxShivaVG\src">
+			<UniqueIdentifier>{9E666529-5A4D-753B-96C6-E2A7}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxShivaVG\libs">
+			<UniqueIdentifier>{EB9C1AF0-FFFB-A1BE-5E5E-E9E3}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxShivaVG\libs\ShivaVG">
+			<UniqueIdentifier>{25C32EFC-B07A-B857-2D22-009D}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxShivaVG\libs\ShivaVG\include">
+			<UniqueIdentifier>{2378F48D-7B7B-5170-67C5-B5E8}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxShivaVG\libs\ShivaVG\include\vg">
+			<UniqueIdentifier>{55F17E14-8A46-0BFA-44D3-E0BE}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxShivaVG\libs\ShivaVG\src">
+			<UniqueIdentifier>{98CC64AF-C278-6FB8-AC3E-F33A}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxSplashScreen">
+			<UniqueIdentifier>{98FE2396-46F9-5720-466F-1F45}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxSplashScreen\src">
+			<UniqueIdentifier>{58003DEF-21B7-2917-3910-BC1D}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxSvg">
+			<UniqueIdentifier>{3DD76815-827C-5F89-582D-2CF4}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxSvg\src">
+			<UniqueIdentifier>{6A00B88F-1ADB-BB17-8276-ED19}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxSvg\libs">
+			<UniqueIdentifier>{C226E9C6-88C9-1F12-D422-3DA3}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxSvg\libs\svgTiny">
+			<UniqueIdentifier>{0A0E4783-DE3F-EB55-7775-3205}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxSvg\libs\svgTiny\src">
+			<UniqueIdentifier>{668F2528-598B-D351-B74F-9E6F}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxUIUtils">
+			<UniqueIdentifier>{3E53EA35-838B-2D4E-53B0-5EBC}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxUIUtils\src">
+			<UniqueIdentifier>{DA8E9DF1-64BD-6852-C279-758D}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxXmlSettings">
+			<UniqueIdentifier>{877F005D-13E6-0592-1D97-F2E3}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxXmlSettings\src">
+			<UniqueIdentifier>{CCB2AC63-49D2-977C-CFE8-AEAD}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxXmlSettings\libs">
+			<UniqueIdentifier>{687714A8-1662-FA1C-261F-50F0}</UniqueIdentifier>
+		</Filter>
+	</ItemGroup>
+	<ItemGroup>
+		<ClInclude Include="src\ofApp.h">
+			<Filter>src</Filter>
+		</ClInclude>
+		<ClInclude Include="src\ofApp.h">
+			<Filter>src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxShivaVG\src\ofxShivaVGRenderer.h">
+			<Filter>addons\ofxShivaVG\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxShivaVG\src\simpleVGContext.h">
+			<Filter>addons\ofxShivaVG\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxShivaVG\src\simpleVGPath.h">
+			<Filter>addons\ofxShivaVG\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxShivaVG\libs\ShivaVG\include\vg\openvg.h">
+			<Filter>addons\ofxShivaVG\libs\ShivaVG\include\vg</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxShivaVG\libs\ShivaVG\include\vg\vgu.h">
+			<Filter>addons\ofxShivaVG\libs\ShivaVG\include\vg</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxShivaVG\libs\ShivaVG\src\shArrayBase.h">
+			<Filter>addons\ofxShivaVG\libs\ShivaVG\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxShivaVG\libs\ShivaVG\src\shArrays.h">
+			<Filter>addons\ofxShivaVG\libs\ShivaVG\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxShivaVG\libs\ShivaVG\src\shContext.h">
+			<Filter>addons\ofxShivaVG\libs\ShivaVG\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxShivaVG\libs\ShivaVG\src\shDefs.h">
+			<Filter>addons\ofxShivaVG\libs\ShivaVG\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxShivaVG\libs\ShivaVG\src\shExtensions.h">
+			<Filter>addons\ofxShivaVG\libs\ShivaVG\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxShivaVG\libs\ShivaVG\src\shGeometry.h">
+			<Filter>addons\ofxShivaVG\libs\ShivaVG\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxShivaVG\libs\ShivaVG\src\shImage.h">
+			<Filter>addons\ofxShivaVG\libs\ShivaVG\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxShivaVG\libs\ShivaVG\src\shPaint.h">
+			<Filter>addons\ofxShivaVG\libs\ShivaVG\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxShivaVG\libs\ShivaVG\src\shPath.h">
+			<Filter>addons\ofxShivaVG\libs\ShivaVG\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxShivaVG\libs\ShivaVG\src\shVectors.h">
+			<Filter>addons\ofxShivaVG\libs\ShivaVG\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxSplashScreen\src\ofxSplashScreen.h">
+			<Filter>addons\ofxSplashScreen\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxSvg\src\ofxSvg.h">
+			<Filter>addons\ofxSvg\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxSvg\libs\svgTiny\src\svgtiny.h">
+			<Filter>addons\ofxSvg\libs\svgTiny\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxSvg\libs\svgTiny\src\svgtiny_internal.h">
+			<Filter>addons\ofxSvg\libs\svgTiny\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxUIUtils\src\ofxClipboard.h">
+			<Filter>addons\ofxUIUtils\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxUIUtils\src\ofxColorPicker.h">
+			<Filter>addons\ofxUIUtils\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxUIUtils\src\ofxDropDownMenu.h">
+			<Filter>addons\ofxUIUtils\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxUIUtils\src\ofxImgButton.h">
+			<Filter>addons\ofxUIUtils\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxUIUtils\src\ofxTextInputField.h">
+			<Filter>addons\ofxUIUtils\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxUIUtils\src\ofxUIButton.h">
+			<Filter>addons\ofxUIUtils\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxUIUtils\src\ofxUIFontRenderer.h">
+			<Filter>addons\ofxUIUtils\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxUIUtils\src\ofxUISlider.h">
+			<Filter>addons\ofxUIUtils\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxUIUtils\src\ofxUIUtils.h">
+			<Filter>addons\ofxUIUtils\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxXmlSettings\src\ofxXmlSettings.h">
+			<Filter>addons\ofxXmlSettings\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxXmlSettings\libs\tinyxml.h">
+			<Filter>addons\ofxXmlSettings\libs</Filter>
+		</ClInclude>
+	</ItemGroup>
+	<ItemGroup>
+		<ResourceCompile Include="icon.rc" />
+	</ItemGroup>
+</Project>

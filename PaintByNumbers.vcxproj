@@ -1,0 +1,260 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{7FD42DF7-442E-479A-BA76-D0022F99702A}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>PaintByNumbers</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\libs\openFrameworksCompiled\project\vs\openFrameworksRelease.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\libs\openFrameworksCompiled\project\vs\openFrameworksRelease.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\libs\openFrameworksCompiled\project\vs\openFrameworksDebug.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\libs\openFrameworksCompiled\project\vs\openFrameworksDebug.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>bin\</OutDir>
+    <IntDir>obj\$(Configuration)\</IntDir>
+    <TargetName>$(ProjectName)_debug</TargetName>
+    <LinkIncremental>true</LinkIncremental>
+    <GenerateManifest>true</GenerateManifest>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>bin\</OutDir>
+    <IntDir>obj\$(Configuration)\</IntDir>
+    <TargetName>$(ProjectName)_debug</TargetName>
+    <LinkIncremental>true</LinkIncremental>
+    <GenerateManifest>true</GenerateManifest>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>bin\</OutDir>
+    <IntDir>obj\$(Configuration)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>bin\</OutDir>
+    <IntDir>obj\$(Configuration)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src;..\..\..\addons\ofxShivaVG\libs;..\..\..\addons\ofxShivaVG\libs\ShivaVG;..\..\..\addons\ofxShivaVG\libs\ShivaVG\include;..\..\..\addons\ofxShivaVG\libs\ShivaVG\include\vg;..\..\..\addons\ofxShivaVG\libs\ShivaVG\src;..\..\..\addons\ofxShivaVG\src;..\..\..\addons\ofxSplashScreen\src;..\..\..\addons\ofxSvg\libs;..\..\..\addons\ofxSvg\libs\svgTiny;..\..\..\addons\ofxSvg\libs\svgTiny\src;..\..\..\addons\ofxSvg\src;..\..\..\addons\ofxUIUtils\src;..\..\..\addons\ofxXmlSettings\libs;..\..\..\addons\ofxXmlSettings\src</AdditionalIncludeDirectories>
+      <CompileAs>CompileAsCpp</CompileAs>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+    <PostBuildEvent />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src;..\..\..\addons\ofxShivaVG\libs;..\..\..\addons\ofxShivaVG\libs\ShivaVG;..\..\..\addons\ofxShivaVG\libs\ShivaVG\include;..\..\..\addons\ofxShivaVG\libs\ShivaVG\include\vg;..\..\..\addons\ofxShivaVG\libs\ShivaVG\src;..\..\..\addons\ofxShivaVG\src;..\..\..\addons\ofxSplashScreen\src;..\..\..\addons\ofxSvg\libs;..\..\..\addons\ofxSvg\libs\svgTiny;..\..\..\addons\ofxSvg\libs\svgTiny\src;..\..\..\addons\ofxSvg\src;..\..\..\addons\ofxUIUtils\src;..\..\..\addons\ofxXmlSettings\libs;..\..\..\addons\ofxXmlSettings\src</AdditionalIncludeDirectories>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+    <PostBuildEvent />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src;..\..\..\addons\ofxShivaVG\libs;..\..\..\addons\ofxShivaVG\libs\ShivaVG;..\..\..\addons\ofxShivaVG\libs\ShivaVG\include;..\..\..\addons\ofxShivaVG\libs\ShivaVG\include\vg;..\..\..\addons\ofxShivaVG\libs\ShivaVG\src;..\..\..\addons\ofxShivaVG\src;..\..\..\addons\ofxSplashScreen\src;..\..\..\addons\ofxSvg\libs;..\..\..\addons\ofxSvg\libs\svgTiny;..\..\..\addons\ofxSvg\libs\svgTiny\src;..\..\..\addons\ofxSvg\src;..\..\..\addons\ofxUIUtils\src;..\..\..\addons\ofxXmlSettings\libs;..\..\..\addons\ofxXmlSettings\src</AdditionalIncludeDirectories>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+    <PostBuildEvent />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src;..\..\..\addons\ofxShivaVG\libs;..\..\..\addons\ofxShivaVG\libs\ShivaVG;..\..\..\addons\ofxShivaVG\libs\ShivaVG\include;..\..\..\addons\ofxShivaVG\libs\ShivaVG\include\vg;..\..\..\addons\ofxShivaVG\libs\ShivaVG\src;..\..\..\addons\ofxShivaVG\src;..\..\..\addons\ofxSplashScreen\src;..\..\..\addons\ofxSvg\libs;..\..\..\addons\ofxSvg\libs\svgTiny;..\..\..\addons\ofxSvg\libs\svgTiny\src;..\..\..\addons\ofxSvg\src;..\..\..\addons\ofxUIUtils\src;..\..\..\addons\ofxXmlSettings\libs;..\..\..\addons\ofxXmlSettings\src</AdditionalIncludeDirectories>
+      <CompileAs>CompileAsCpp</CompileAs>
+    </ClCompile>
+    <Link>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+    <PostBuildEvent />
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\ofApp.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxShivaVG\src\ofxShivaVGRenderer.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxShivaVG\src\simpleVGContext.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxShivaVG\src\simpleVGPath.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxShivaVG\libs\ShivaVG\src\shArrays.c" />
+    <ClCompile Include="..\..\..\addons\ofxShivaVG\libs\ShivaVG\src\shContext.c" />
+    <ClCompile Include="..\..\..\addons\ofxShivaVG\libs\ShivaVG\src\shExtensions.c" />
+    <ClCompile Include="..\..\..\addons\ofxShivaVG\libs\ShivaVG\src\shGeometry.c" />
+    <ClCompile Include="..\..\..\addons\ofxShivaVG\libs\ShivaVG\src\shImage.c" />
+    <ClCompile Include="..\..\..\addons\ofxShivaVG\libs\ShivaVG\src\shPaint.c" />
+    <ClCompile Include="..\..\..\addons\ofxShivaVG\libs\ShivaVG\src\shParams.c" />
+    <ClCompile Include="..\..\..\addons\ofxShivaVG\libs\ShivaVG\src\shPath.c" />
+    <ClCompile Include="..\..\..\addons\ofxShivaVG\libs\ShivaVG\src\shPipeline.c" />
+    <ClCompile Include="..\..\..\addons\ofxShivaVG\libs\ShivaVG\src\shVectors.c" />
+    <ClCompile Include="..\..\..\addons\ofxShivaVG\libs\ShivaVG\src\shVgu.c" />
+    <ClCompile Include="..\..\..\addons\ofxSplashScreen\src\ofxSplashScreen.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxSvg\src\ofxSvg.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxSvg\libs\svgTiny\src\src_colors.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxSvg\libs\svgTiny\src\svgtiny.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxSvg\libs\svgTiny\src\svgtiny_gradient.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxSvg\libs\svgTiny\src\svgtiny_list.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxUIUtils\src\ofxClipboard.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxUIUtils\src\ofxColorPicker.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxUIUtils\src\ofxDropDownMenu.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxUIUtils\src\ofxImgButton.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxUIUtils\src\ofxTextInputField.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxUIUtils\src\ofxUIButton.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxUIUtils\src\ofxUISlider.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxXmlSettings\src\ofxXmlSettings.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxXmlSettings\libs\tinyxml.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxXmlSettings\libs\tinyxmlerror.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxXmlSettings\libs\tinyxmlparser.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\ofApp.h" />
+    <ClInclude Include="..\..\..\addons\ofxShivaVG\src\ofxShivaVGRenderer.h" />
+    <ClInclude Include="..\..\..\addons\ofxShivaVG\src\simpleVGContext.h" />
+    <ClInclude Include="..\..\..\addons\ofxShivaVG\src\simpleVGPath.h" />
+    <ClInclude Include="..\..\..\addons\ofxShivaVG\libs\ShivaVG\include\vg\openvg.h" />
+    <ClInclude Include="..\..\..\addons\ofxShivaVG\libs\ShivaVG\include\vg\vgu.h" />
+    <ClInclude Include="..\..\..\addons\ofxShivaVG\libs\ShivaVG\src\shArrayBase.h" />
+    <ClInclude Include="..\..\..\addons\ofxShivaVG\libs\ShivaVG\src\shArrays.h" />
+    <ClInclude Include="..\..\..\addons\ofxShivaVG\libs\ShivaVG\src\shContext.h" />
+    <ClInclude Include="..\..\..\addons\ofxShivaVG\libs\ShivaVG\src\shDefs.h" />
+    <ClInclude Include="..\..\..\addons\ofxShivaVG\libs\ShivaVG\src\shExtensions.h" />
+    <ClInclude Include="..\..\..\addons\ofxShivaVG\libs\ShivaVG\src\shGeometry.h" />
+    <ClInclude Include="..\..\..\addons\ofxShivaVG\libs\ShivaVG\src\shImage.h" />
+    <ClInclude Include="..\..\..\addons\ofxShivaVG\libs\ShivaVG\src\shPaint.h" />
+    <ClInclude Include="..\..\..\addons\ofxShivaVG\libs\ShivaVG\src\shPath.h" />
+    <ClInclude Include="..\..\..\addons\ofxShivaVG\libs\ShivaVG\src\shVectors.h" />
+    <ClInclude Include="..\..\..\addons\ofxSplashScreen\src\ofxSplashScreen.h" />
+    <ClInclude Include="..\..\..\addons\ofxSvg\src\ofxSvg.h" />
+    <ClInclude Include="..\..\..\addons\ofxSvg\libs\svgTiny\src\svgtiny.h" />
+    <ClInclude Include="..\..\..\addons\ofxSvg\libs\svgTiny\src\svgtiny_internal.h" />
+    <ClInclude Include="..\..\..\addons\ofxUIUtils\src\ofxClipboard.h" />
+    <ClInclude Include="..\..\..\addons\ofxUIUtils\src\ofxColorPicker.h" />
+    <ClInclude Include="..\..\..\addons\ofxUIUtils\src\ofxDropDownMenu.h" />
+    <ClInclude Include="..\..\..\addons\ofxUIUtils\src\ofxImgButton.h" />
+    <ClInclude Include="..\..\..\addons\ofxUIUtils\src\ofxTextInputField.h" />
+    <ClInclude Include="..\..\..\addons\ofxUIUtils\src\ofxUIButton.h" />
+    <ClInclude Include="..\..\..\addons\ofxUIUtils\src\ofxUIFontRenderer.h" />
+    <ClInclude Include="..\..\..\addons\ofxUIUtils\src\ofxUISlider.h" />
+    <ClInclude Include="..\..\..\addons\ofxUIUtils\src\ofxUIUtils.h" />
+    <ClInclude Include="..\..\..\addons\ofxXmlSettings\src\ofxXmlSettings.h" />
+    <ClInclude Include="..\..\..\addons\ofxXmlSettings\libs\tinyxml.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="$(OF_ROOT)\libs\openFrameworksCompiled\project\vs\openframeworksLib.vcxproj">
+      <Project>{5837595d-aca9-485c-8e76-729040ce4b0b}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="icon.rc">
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">/D_DEBUG %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">/D_DEBUG %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalIncludeDirectories>$(OF_ROOT)\libs\openFrameworksCompiled\project\vs</AdditionalIncludeDirectories>
+    </ResourceCompile>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties RESOURCE_FILE="icon.rc" />
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>
