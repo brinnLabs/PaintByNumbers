@@ -2,13 +2,13 @@
 
 #include "ofMain.h"
 #include "ofxSplashScreen.h"
+#include "ofxShivaVGRenderer.h" 
 #include "ofxUIUtils.h"
 #include "ofxSvg.h"
 
 enum CursorType {
 	HAND,
 	BRUSH,
-	BRUSH_ERASER,
 	BUCKET,
 	ERASER
 };
@@ -42,7 +42,6 @@ class ofApp : public ofBaseApp{
 
 		int hoverCounter, moveCooldown, currentImage;
 		ofColor movedColor, currentColor;
-		vector<ofColor> layerColors;
 
 		ofxSVG drawnSvg;
 
@@ -51,12 +50,12 @@ class ofApp : public ofBaseApp{
 
 		CursorType cursorType;
 
-		ofxImgButton hand, /*brush,*/ bucket, eraser, forward, back;
+		ofxImgButton hand, brush, bucket, eraser, forward, back;
 		void buttonPressed(const pair<bool, int> & button);
 
 		ofRectangle canvas;
 
-		ofFbo svgFrameTop, svgFrame;
+		ofFbo canvasFrame, svgFrame;
 
 		ofDirectory dir;
 
