@@ -5,13 +5,25 @@
 #include "ofxUIUtils.h"
 #include "ofxSvg.h"
 
+// Kinect Header files
+#include <Kinect.h>
+
 enum CursorType {
 	HAND,
-	BRUSH,
-	BRUSH_ERASER,
 	BUCKET,
 	ERASER
 };
+
+// Safe release for interfaces
+template<class Interface>
+inline void SafeRelease(Interface *& pInterfaceToRelease)
+{
+	if (pInterfaceToRelease != NULL)
+	{
+		pInterfaceToRelease->Release();
+		pInterfaceToRelease = NULL;
+	}
+}
 
 class ofApp : public ofBaseApp{
 
@@ -51,8 +63,14 @@ class ofApp : public ofBaseApp{
 
 		CursorType cursorType;
 
-		ofxImgButton hand, /*brush,*/ bucket, eraser, forward, back;
+		ofxImgButton hand, bucket, eraser, forward, back, reset;
 		void buttonPressed(const pair<bool, int> & button);
+
+		ofPoint BodyToScreen(const CameraSpacePoint & bodyPoint, int width, int height);
+
+		HRESULT InitializeDefaultSensor();
+
+		void ProcessBody(INT64 nTime, int nBodyCount, IBody ** ppBodies);
 
 		ofRectangle canvas;
 
@@ -62,4 +80,12 @@ class ofApp : public ofBaseApp{
 
 		ofTexture tex;
 
+		// Current Kinect
+		IKinectSensor*          m_pKinectSensor;
+		ICoordinateMapper*      m_pCoordinateMapper;
+
+		// Body reader
+		IBodyFrameReader*       m_pBodyFrameReader;
+
+		map<int, ofPoint> handCoordinates;
 };

@@ -9,6 +9,7 @@ void ofApp::setup2() {
 	font.loadFont(OF_TTF_SANS, 14);
 
 	ofHideCursor();
+	InitializeDefaultSensor();
 
 	cursorIcon.load("bucket3.png");
 	cursorType = HAND;
@@ -53,8 +54,8 @@ void ofApp::setup2() {
 	hand.setup("hand.png");
 	hand.setColor(ofColor::mediumSeaGreen);
 	hand.setID(1);
-	/*brush.setup("brush.png");
-	brush.setID(2);*/
+	reset.setup("Reset.png");
+	reset.setID(2);
 	bucket.setup("bucket3.png");
 	bucket.setID(3);
 	eraser.setup("eraser.png");
@@ -91,7 +92,6 @@ void ofApp::setup2() {
 	ofAddListener(colorPick.pickerPickEvent, this, &ofApp::pickerSelected);
 	ofAddListener(colorPick.pickerMoveEvent, this, &ofApp::pickerMoved);
 	ofAddListener(hand.buttonEvent, this, &ofApp::buttonPressed);
-	//ofAddListener(brush.buttonEvent, this, &ofApp::buttonPressed);
 	ofAddListener(bucket.buttonEvent, this, &ofApp::buttonPressed);
 	ofAddListener(eraser.buttonEvent, this, &ofApp::buttonPressed);
 	ofAddListener(forward.buttonEvent, this, &ofApp::buttonPressed);
@@ -110,8 +110,43 @@ void ofApp::update() {
 		this->setup2();
 	}
 	else {
+		if (m_pBodyFrameReader)
+		{
+
+
+			IBodyFrame* pBodyFrame = NULL;
+
+			HRESULT hr = m_pBodyFrameReader->AcquireLatestFrame(&pBodyFrame);
+
+			if (SUCCEEDED(hr))
+			{
+				INT64 nTime = 0;
+
+				hr = pBodyFrame->get_RelativeTime(&nTime);
+
+				IBody* ppBodies[BODY_COUNT] = { 0 };
+
+				if (SUCCEEDED(hr))
+				{
+					hr = pBodyFrame->GetAndRefreshBodyData(_countof(ppBodies), ppBodies);
+				}
+
+				if (SUCCEEDED(hr))
+				{
+					ProcessBody(nTime, BODY_COUNT, ppBodies);
+				}
+
+				for (int i = 0; i < _countof(ppBodies); ++i)
+				{
+					SafeRelease(ppBodies[i]);
+				}
+			}
+		
+
+		SafeRelease(pBodyFrame);
+		}
 		if (ofGetElapsedTimeMillis() - moveCooldown > 666) {
-			if (hand.getIsHovering() || /*brush.getIsHovering() ||*/ bucket.getIsHovering() || eraser.getIsHovering()) {
+			if (hand.getIsHovering() || bucket.getIsHovering() || eraser.getIsHovering()) {
 				switch (cursorType) {
 				case HAND:
 					if (!hand.getIsHovering()) {
@@ -129,14 +164,6 @@ void ofApp::update() {
 						}
 					}
 					break;
-					/*case BRUSH:
-						if (!brush.getIsHovering()) {
-							if (!showHover) {
-								hoverCounter = ofGetElapsedTimeMillis();
-								showHover = true;
-							}
-						}
-						break;*/
 				case BUCKET:
 					if (!bucket.getIsHovering()) {
 						if (!showHover) {
@@ -147,7 +174,7 @@ void ofApp::update() {
 					break;
 				}
 			}
-			else if (forward.getIsHovering() || back.getIsHovering()) {
+			else if (forward.getIsHovering() || back.getIsHovering() || reset.getIsHovering()) {
 				if (!showHover) {
 					hoverCounter = ofGetElapsedTimeMillis();
 					showHover = true;
@@ -176,7 +203,6 @@ void ofApp::update() {
 					cursorType = HAND;
 					hand.setColor(ofColor::mediumSeaGreen);
 					eraser.setColor(255);
-					//brush.setColor(255);
 					bucket.setColor(255);
 				}
 				else if (eraser.getIsHovering()) {
@@ -184,24 +210,23 @@ void ofApp::update() {
 					cursorType = ERASER;
 					hand.setColor(255);
 					eraser.setColor(ofColor::mediumSeaGreen);
-					//brush.setColor(255);
 					bucket.setColor(255);
 				}
-				/*else if (brush.getIsHovering()) {
-					cursorIcon.load("brush.png");
-					cursorType = BRUSH;
-					hand.setColor(255);
-					eraser.setColor(255);
-					brush.setColor(ofColor::mediumSeaGreen);
-					bucket.setColor(255);
-				}*/
 				else if (bucket.getIsHovering()) {
 					cursorIcon.load("bucket2.png");
 					cursorType = BUCKET;
 					hand.setColor(255);
 					eraser.setColor(255);
-					//brush.setColor(255);
 					bucket.setColor(ofColor::mediumSeaGreen);
+				}
+				else if (reset.getIsHovering()) {
+					moveCooldown = ofGetElapsedTimeMillis();
+					svgFrameTop.begin(); {
+						ofClear(255);
+					} svgFrameTop.end();
+					for (auto & layer : layerColors) {
+						layer = ofColor::white;
+					}
 				}
 				else if (forward.getIsHovering()) {
 					currentImage++;
@@ -279,7 +304,7 @@ void ofApp::update() {
 								fullPoly.addVertices(polyline.getVertices());
 							}
 							fullPoly.setClosed(true);
-							if (fullPoly.size() > 0 && fullPoly.inside(mouseX - (/*canvas.x + */(ofGetWidth() / 25 + canvas.width / 2 - (drawnSvg.getWidth()*scale) / 2)), mouseY - ((ofGetHeight() / 25 + canvas.height / 2 - (drawnSvg.getHeight()*scale) / 2)))) {
+							if (fullPoly.size() > 0 && fullPoly.inside(mouseX - ((ofGetWidth() / 25 + canvas.width / 2 - (drawnSvg.getWidth()*scale) / 2)), mouseY - ((ofGetHeight() / 25 + canvas.height / 2 - (drawnSvg.getHeight()*scale) / 2)))) {
 								if (cursorType == BUCKET) {
 									layerColors[counter] = currentColor;
 								}
@@ -329,10 +354,9 @@ void ofApp::draw() {
 		svgFrameTop.draw(canvas.x, canvas.y);
 
 		hand.draw(ofGetWidth() / 2, ofGetHeight() * (4.0 / 5.0), ofGetWidth() / 8, ofGetHeight() / 5);
-		//brush.draw(ofGetWidth() / 2 + ofGetWidth() / 8, ofGetHeight() * (4.0 / 5.0), ofGetWidth() / 8, ofGetHeight() / 5);
 		bucket.draw(ofGetWidth() / 2 + ofGetWidth() / 8, ofGetHeight() * (4.0 / 5.0), ofGetWidth() / 8, ofGetHeight() / 5);
 		eraser.draw(ofGetWidth() / 2 + 2 * ofGetWidth() / 8, ofGetHeight() * (4.0 / 5.0), ofGetWidth() / 8, ofGetHeight() / 5);
-		//reset.draw(ofGetWidth() / 2 + 3 * ofGetWidth() / 8, ofGetHeight() * (4.0 / 5.0), ofGetWidth() / 8, ofGetHeight() / 5);
+		reset.draw(ofGetWidth() / 2 + 3 * ofGetWidth() / 8, ofGetHeight() * (4.0 / 5.0), ofGetWidth() / 8, ofGetHeight() / 5);
 		forward.draw(ofGetWidth() * (24 / 25.0), canvas.getCenter().y - 50, ofGetWidth() / 25, 100);
 		back.draw(0, canvas.getCenter().y - 50, ofGetWidth() / 25, 100);
 
@@ -397,7 +421,6 @@ void ofApp::draw() {
 			case ERASER:
 				ofSetColor(255);
 				break;
-			case BRUSH:
 			case BUCKET:
 				ofSetColor(currentColor);
 				break;
@@ -421,25 +444,6 @@ void ofApp::keyReleased(int key) {
 void ofApp::mouseMoved(int x, int y) {
 	moveCooldown = ofGetElapsedTimeMillis();
 	showHover = false;
-	if (canvas.inside(x, y) && toolStatus) {
-		svgFrameTop.begin(); {
-			ofTranslate(-canvas.x, -canvas.y);
-			switch (cursorType) {
-			case BRUSH_ERASER:
-				ofSetColor(255);
-				ofCircle(x, y, 5);
-				break;
-			case BRUSH:
-				ofSetColor(currentColor);
-				ofCircle(x, y, 5);
-				break;
-			case BUCKET:
-			case HAND:
-			case ERASER:
-				break;
-			}
-		} svgFrameTop.end();
-	}
 }
 
 //--------------------------------------------------------------
@@ -522,16 +526,6 @@ void ofApp::buttonPressed(const pair<bool, int>& button)
 			showHover = false;
 			hand.setColor(ofColor::mediumSeaGreen);
 			eraser.setColor(255);
-			//brush.setColor(255);
-			bucket.setColor(255);
-			break;
-		case 2:
-			cursorIcon.load("brush.png");
-			cursorType = BRUSH;
-			showHover = false;
-			hand.setColor(255);
-			eraser.setColor(255);
-			//brush.setColor(ofColor::mediumSeaGreen);
 			bucket.setColor(255);
 			break;
 		case 3:
@@ -540,7 +534,6 @@ void ofApp::buttonPressed(const pair<bool, int>& button)
 			showHover = false;
 			hand.setColor(255);
 			eraser.setColor(255);
-			//brush.setColor(255);
 			bucket.setColor(ofColor::mediumSeaGreen);
 			break;
 		case 4:
@@ -549,7 +542,6 @@ void ofApp::buttonPressed(const pair<bool, int>& button)
 			showHover = false;
 			hand.setColor(255);
 			eraser.setColor(ofColor::mediumSeaGreen);
-			//brush.setColor(255);
 			bucket.setColor(255);
 			break;
 		case 5:
@@ -593,7 +585,7 @@ void ofApp::buttonPressed(const pair<bool, int>& button)
 				ofPushMatrix(); {
 					ofTranslate(-canvas.x, -canvas.y);
 					float scale = MIN(canvas.width / drawnSvg.getWidth(), canvas.height / drawnSvg.getHeight());
-					ofTranslate(ofGetWidth() / 25 + canvas.width / 2 - (drawnSvg.getWidth()*scale) / 2, ofGetHeight() / 25 + canvas.height / 2 - (drawnSvg.getHeight()*scale) / 2);
+					ofTranslate(ofGetWidth() / 25 + canvas.width / 2 - (drawnSvg.getWidth() * scale) / 2, ofGetHeight() / 25 + canvas.height / 2 - (drawnSvg.getHeight() * scale) / 2);
 					for (auto path : drawnSvg.getPaths()) {
 						path.setFilled(true);
 						path.setFillColor(ofColor::white);
@@ -606,6 +598,156 @@ void ofApp::buttonPressed(const pair<bool, int>& button)
 				} ofPopMatrix();
 			} svgFrame.end();
 			break;
+		}
+	}
+}
+
+/// <summary>
+/// Converts a body point to screen space
+/// </summary>
+/// <param name="bodyPoint">body point to tranform</param>
+/// <param name="width">width (in pixels) of output buffer</param>
+/// <param name="height">height (in pixels) of output buffer</param>
+/// <returns>point in screen-space</returns>
+ofPoint ofApp::BodyToScreen(const CameraSpacePoint& bodyPoint, int width, int height)
+{
+	// Calculate the body's position on the screen
+	DepthSpacePoint depthPoint = { 0 };
+	m_pCoordinateMapper->MapCameraPointToDepthSpace(bodyPoint, &depthPoint);
+
+	float screenPointX = static_cast<float>(depthPoint.X * width) / ofGetWidth();
+	float screenPointY = static_cast<float>(depthPoint.Y * height) / ofGetHeight();
+
+	return ofPoint(screenPointX, screenPointY);
+}
+
+/// <summary>
+/// Initializes the default Kinect sensor
+/// </summary>
+/// <returns>indicates success or failure</returns>
+HRESULT ofApp::InitializeDefaultSensor()
+{
+	HRESULT hr;
+
+	hr = GetDefaultKinectSensor(&m_pKinectSensor);
+	if (FAILED(hr))
+	{
+		return hr;
+	}
+
+	if (m_pKinectSensor)
+	{
+		// Initialize the Kinect and get coordinate mapper and the body reader
+		IBodyFrameSource* pBodyFrameSource = NULL;
+
+		hr = m_pKinectSensor->Open();
+
+		if (SUCCEEDED(hr))
+		{
+			hr = m_pKinectSensor->get_CoordinateMapper(&m_pCoordinateMapper);
+		}
+
+		if (SUCCEEDED(hr))
+		{
+			hr = m_pKinectSensor->get_BodyFrameSource(&pBodyFrameSource);
+		}
+
+		if (SUCCEEDED(hr))
+		{
+			hr = pBodyFrameSource->OpenReader(&m_pBodyFrameReader);
+		}
+
+		SafeRelease(pBodyFrameSource);
+	}
+
+	if (!m_pKinectSensor || FAILED(hr))
+	{
+		ofLogError("No ready Kinect found!");
+		return E_FAIL;
+	}
+
+	return hr;
+}
+
+/// <summary>
+/// Handle new body data
+/// <param name="nTime">timestamp of frame</param>
+/// <param name="nBodyCount">body data count</param>
+/// <param name="ppBodies">body data in frame</param>
+/// </summary>
+void ofApp::ProcessBody(INT64 nTime, int nBodyCount, IBody** ppBodies)
+{
+	for (int i = 0; i < nBodyCount; ++i)
+	{
+		IBody* pBody = ppBodies[i];
+		if (pBody)
+		{
+			BOOLEAN bTracked = false;
+			HRESULT hr = pBody->get_IsTracked(&bTracked);
+
+			if (SUCCEEDED(hr) && bTracked)
+			{
+				Joint joints[JointType_Count];
+				ofPoint jointPoints[JointType_Count];
+				HandState leftHandState = HandState_Unknown;
+				HandState rightHandState = HandState_Unknown;
+
+				pBody->get_HandLeftState(&leftHandState);
+				pBody->get_HandRightState(&rightHandState);
+
+				hr = pBody->GetJoints(_countof(joints), joints);
+				UINT64 id_num = 0;
+				pBody->get_TrackingId(&id_num);
+				if (SUCCEEDED(hr))
+				{
+					for (int j = 0; j < _countof(joints); ++j)
+					{
+						jointPoints[j] = BodyToScreen(joints[j].Position, ofGetWidth(), ofGetHeight());
+					}
+
+					switch (leftHandState)
+					{
+					case HandState_Closed:
+						if (handCoordinates.count(id_num) > 0) {
+							handCoordinates.at(id_num) = make_pair(true, jointPoints[JointType_HandLeft]);
+						}
+						else {
+							handCoordinates.emplace(id_num, make_pair(true, jointPoints[JointType_HandLeft]));
+						}
+						break;
+
+					default:
+						if (handCoordinates.count(id_num) > 0) {
+							handCoordinates.at(id_num) = make_pair(false, jointPoints[JointType_HandLeft]);
+						}
+						else {
+							handCoordinates.emplace(id_num, make_pair(false, jointPoints[JointType_HandLeft]));
+						}
+						break;
+					}
+
+					switch (rightHandState)
+					{
+					case HandState_Closed:
+						if (handCoordinates.count(id_num) > 0) {
+							handCoordinates.at(id_num) = make_pair(true, jointPoints[JointType_HandRight]);
+						}
+						else {
+							handCoordinates.emplace(id_num, make_pair(true, jointPoints[JointType_HandRight]));
+						}
+						break;
+
+					default:
+						if (handCoordinates.count(id_num) > 0) {
+							handCoordinates.at(id_num) = make_pair(false, jointPoints[JointType_HandRight]);
+						}
+						else {
+							handCoordinates.emplace(id_num, make_pair(false, jointPoints[JointType_HandRight]));
+						}
+						break;
+					}
+				}
+			}
 		}
 	}
 }
