@@ -4,6 +4,8 @@
 #include "ofxSplashScreen.h"
 #include "ofxUIUtils.h"
 #include "ofxSvg.h"
+#include "ofxShivaVGRenderer.h"
+
 
 // Kinect Header files
 #include <Kinect.h>
@@ -224,4 +226,6 @@ public:
 
 	vector<int> trackedHandIds;
 	map<int, pair<TrackedHand, TrackedHand>> hands;
+
+	ofPtr<ofxShivaVGRenderer> shivaRenderer;
 };

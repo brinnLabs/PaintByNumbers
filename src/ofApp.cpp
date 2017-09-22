@@ -33,6 +33,12 @@ void ofApp::setup2() {
 
 	canvas = ofRectangle(ofGetWidth() / 25, ofGetHeight() / 25, ofGetWidth() * (23.0 / 25.0), ofGetHeight() * .8 - 2 * (ofGetHeight() / 25));
 
+	shivaRenderer = ofPtr<ofxShivaVGRenderer>(new ofxShivaVGRenderer);
+	ofSetCurrentRenderer(shivaRenderer);
+
+	shivaRenderer->setLineCapStyle(VG_CAP_SQUARE);
+	shivaRenderer->setLineJoinStyle(VG_JOIN_MITER);
+
 	ofEnableSmoothing();
 	ofSetVerticalSync(false);
 	ofSetFullscreen(false);
@@ -40,7 +46,6 @@ void ofApp::setup2() {
 	ofSetCurveResolution(50);
 
 	hand.setup("hand.png");
-	hand.setColor(ofColor::mediumSeaGreen);
 	hand.setID(1);
 	reset.setup("Reset.png");
 	reset.setID(2);
@@ -100,8 +105,6 @@ void ofApp::update() {
 	else {
 		if (m_pBodyFrameReader)
 		{
-
-
 			IBodyFrame* pBodyFrame = NULL;
 
 			HRESULT hr = m_pBodyFrameReader->AcquireLatestFrame(&pBodyFrame);
@@ -581,88 +584,88 @@ void ofApp::pickerMoved(const ofColor & color) {
 
 void ofApp::buttonPressed(const pair<bool, int>& button)
 {
-	//if (button.first) {
-	//	switch (button.second) {
-	//	case 1:
-	//		cursorIcon.load("hand.png");
-	//		cursorType = HAND;
-	//		//showHover = false;
-	//		hand.setColor(ofColor::mediumSeaGreen);
-	//		eraser.setColor(255);
-	//		bucket.setColor(255);
-	//		break;
-	//	case 3:
-	//		cursorIcon.load("bucket.png");
-	//		cursorType = BUCKET;
-	//		//showHover = false;
-	//		hand.setColor(255);
-	//		eraser.setColor(255);
-	//		bucket.setColor(ofColor::mediumSeaGreen);
-	//		break;
-	//	case 4:
-	//		cursorIcon.load("eraser.png");
-	//		cursorType = ERASER;
-	//		//showHover = false;
-	//		hand.setColor(255);
-	//		eraser.setColor(ofColor::mediumSeaGreen);
-	//		bucket.setColor(255);
-	//		break;
-	//	case 5:
-	//		currentImage++;
-	//		currentImage %= dir.numFiles();
-	//		drawnSvg.load("svgs\\" + dir.getName(currentImage));
-	//		svgFrameTop.begin(); {
-	//			ofClear(255);
-	//		} svgFrameTop.end();
-	//		layerColors.clear();
-	//		svgFrame.begin(); {
-	//			ofClear(255);
-	//			ofPushMatrix(); {
-	//				ofTranslate(-canvas.x, -canvas.y);
-	//				float scale = MIN(canvas.width / drawnSvg.getWidth(), canvas.height / drawnSvg.getHeight());
-	//				ofTranslate(ofGetWidth() / 25 + canvas.width / 2 - (drawnSvg.getWidth()*scale) / 2, ofGetHeight() / 25 + canvas.height / 2 - (drawnSvg.getHeight()*scale) / 2);
-	//				for (auto path : drawnSvg.getPaths()) {
-	//					path.setFilled(true);
-	//					path.setFillColor(ofColor::white);
-	//					path.setStrokeWidth(1);
-	//					path.setStrokeColor(ofColor::black);
-	//					path.scale(scale, scale);
-	//					path.draw();
-	//					layerColors.push_back(ofColor::white);
-	//				}
-	//			} ofPopMatrix();
-	//		} svgFrame.end();
-	//		break;
-	//	case 6:
-	//		currentImage--;
-	//		if (currentImage < 0) {
-	//			currentImage = dir.numFiles() - 1;
-	//		}
-	//		drawnSvg.load("svgs\\" + dir.getName(currentImage));
-	//		svgFrameTop.begin(); {
-	//			ofClear(255);
-	//		} svgFrameTop.end();
-	//		layerColors.clear();
-	//		svgFrame.begin(); {
-	//			ofClear(255);
-	//			ofPushMatrix(); {
-	//				ofTranslate(-canvas.x, -canvas.y);
-	//				float scale = MIN(canvas.width / drawnSvg.getWidth(), canvas.height / drawnSvg.getHeight());
-	//				ofTranslate(ofGetWidth() / 25 + canvas.width / 2 - (drawnSvg.getWidth() * scale) / 2, ofGetHeight() / 25 + canvas.height / 2 - (drawnSvg.getHeight() * scale) / 2);
-	//				for (auto path : drawnSvg.getPaths()) {
-	//					path.setFilled(true);
-	//					path.setFillColor(ofColor::white);
-	//					path.setStrokeWidth(1);
-	//					path.setStrokeColor(ofColor::black);
-	//					path.scale(scale, scale);
-	//					path.draw();
-	//					layerColors.push_back(ofColor::white);
-	//				}
-	//			} ofPopMatrix();
-	//		} svgFrame.end();
-	//		break;
-	//	}
-	//}
+	if (button.first) {
+		switch (button.second) {
+		//case 1:
+		//	cursorIcon.load("hand.png");
+		//	cursorType = HAND;
+		//	//showHover = false;
+		//	hand.setColor(ofColor::mediumSeaGreen);
+		//	eraser.setColor(255);
+		//	bucket.setColor(255);
+		//	break;
+		//case 3:
+		//	cursorIcon.load("bucket.png");
+		//	cursorType = BUCKET;
+		//	//showHover = false;
+		//	hand.setColor(255);
+		//	eraser.setColor(255);
+		//	bucket.setColor(ofColor::mediumSeaGreen);
+		//	break;
+		//case 4:
+		//	cursorIcon.load("eraser.png");
+		//	cursorType = ERASER;
+		//	//showHover = false;
+		//	hand.setColor(255);
+		//	eraser.setColor(ofColor::mediumSeaGreen);
+		//	bucket.setColor(255);
+		//	break;
+		case 5:
+			currentImage++;
+			currentImage %= dir.numFiles();
+			drawnSvg.load("svgs\\" + dir.getName(currentImage));
+			svgFrameTop.begin(); {
+				ofClear(255);
+			} svgFrameTop.end();
+			layerColors.clear();
+			svgFrame.begin(); {
+				ofClear(255);
+				ofPushMatrix(); {
+					ofTranslate(-canvas.x, -canvas.y);
+					float scale = MIN(canvas.width / drawnSvg.getWidth(), canvas.height / drawnSvg.getHeight());
+					ofTranslate(ofGetWidth() / 25 + canvas.width / 2 - (drawnSvg.getWidth()*scale) / 2, ofGetHeight() / 25 + canvas.height / 2 - (drawnSvg.getHeight()*scale) / 2);
+					for (auto path : drawnSvg.getPaths()) {
+						path.setFilled(true);
+						path.setFillColor(ofColor::white);
+						path.setStrokeWidth(1);
+						path.setStrokeColor(ofColor::black);
+						path.scale(scale, scale);
+						path.draw();
+						layerColors.push_back(ofColor::white);
+					}
+				} ofPopMatrix();
+			} svgFrame.end();
+			break;
+		case 6:
+			currentImage--;
+			if (currentImage < 0) {
+				currentImage = dir.numFiles() - 1;
+			}
+			drawnSvg.load("svgs\\" + dir.getName(currentImage));
+			svgFrameTop.begin(); {
+				ofClear(255);
+			} svgFrameTop.end();
+			layerColors.clear();
+			svgFrame.begin(); {
+				ofClear(255);
+				ofPushMatrix(); {
+					ofTranslate(-canvas.x, -canvas.y);
+					float scale = MIN(canvas.width / drawnSvg.getWidth(), canvas.height / drawnSvg.getHeight());
+					ofTranslate(ofGetWidth() / 25 + canvas.width / 2 - (drawnSvg.getWidth() * scale) / 2, ofGetHeight() / 25 + canvas.height / 2 - (drawnSvg.getHeight() * scale) / 2);
+					for (auto path : drawnSvg.getPaths()) {
+						path.setFilled(true);
+						path.setFillColor(ofColor::white);
+						path.setStrokeWidth(1);
+						path.setStrokeColor(ofColor::black);
+						path.scale(scale, scale);
+						path.draw();
+						layerColors.push_back(ofColor::white);
+					}
+				} ofPopMatrix();
+			} svgFrame.end();
+			break;
+		}
+	}
 }
 
 /// <summary>
@@ -695,6 +698,7 @@ HRESULT ofApp::InitializeDefaultSensor()
 	hr = GetDefaultKinectSensor(&m_pKinectSensor);
 	if (FAILED(hr))
 	{
+		ofLogError("No Kinect found!");
 		return hr;
 	}
 

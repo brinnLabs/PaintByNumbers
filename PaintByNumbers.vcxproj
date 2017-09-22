@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -104,7 +104,7 @@
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src;..\..\..\addons\ofxSplashScreen\src;..\..\..\addons\ofxSvg\libs;..\..\..\addons\ofxSvg\libs\libxml2;..\..\..\addons\ofxSvg\libs\libxml2\include;..\..\..\addons\ofxSvg\libs\libxml2\include\libxml;..\..\..\addons\ofxSvg\libs\libxml2\lib;..\..\..\addons\ofxSvg\libs\libxml2\lib\vs;..\..\..\addons\ofxSvg\libs\libxml2\lib\vs\Win32;..\..\..\addons\ofxSvg\libs\libxml2\lib\vs\x64;..\..\..\addons\ofxSvg\libs\libxml2\license;..\..\..\addons\ofxSvg\libs\svgtiny;..\..\..\addons\ofxSvg\libs\svgtiny\include;..\..\..\addons\ofxSvg\libs\svgtiny\lib;..\..\..\addons\ofxSvg\libs\svgtiny\lib\vs;..\..\..\addons\ofxSvg\libs\svgtiny\lib\vs\Win32;..\..\..\addons\ofxSvg\libs\svgtiny\lib\vs\x64;..\..\..\addons\ofxSvg\libs\svgtiny\license;..\..\..\addons\ofxSvg\src;..\..\..\addons\ofxUIUtils\src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src;..\..\..\addons\ofxShivaVG\libs;..\..\..\addons\ofxShivaVG\libs\ShivaVG;..\..\..\addons\ofxShivaVG\libs\ShivaVG\include;..\..\..\addons\ofxShivaVG\libs\ShivaVG\include\vg;..\..\..\addons\ofxShivaVG\libs\ShivaVG\src;..\..\..\addons\ofxShivaVG\src;..\..\..\addons\ofxSplashScreen\src;..\..\..\addons\ofxSvg\libs;..\..\..\addons\ofxSvg\libs\libxml2;..\..\..\addons\ofxSvg\libs\libxml2\include;..\..\..\addons\ofxSvg\libs\libxml2\include\libxml;..\..\..\addons\ofxSvg\libs\libxml2\lib;..\..\..\addons\ofxSvg\libs\libxml2\lib\vs;..\..\..\addons\ofxSvg\libs\libxml2\lib\vs\Win32;..\..\..\addons\ofxSvg\libs\libxml2\lib\vs\x64;..\..\..\addons\ofxSvg\libs\libxml2\license;..\..\..\addons\ofxSvg\libs\svgtiny;..\..\..\addons\ofxSvg\libs\svgtiny\include;..\..\..\addons\ofxSvg\libs\svgtiny\lib;..\..\..\addons\ofxSvg\libs\svgtiny\lib\vs;..\..\..\addons\ofxSvg\libs\svgtiny\lib\vs\Win32;..\..\..\addons\ofxSvg\libs\svgtiny\lib\vs\x64;..\..\..\addons\ofxSvg\libs\svgtiny\license;..\..\..\addons\ofxSvg\src;..\..\..\addons\ofxUIUtils\src</AdditionalIncludeDirectories>
       <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
     <Link>
@@ -123,7 +123,7 @@
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src;..\..\..\addons\ofxSplashScreen\src;..\..\..\addons\ofxSvg\libs;..\..\..\addons\ofxSvg\libs\libxml2;..\..\..\addons\ofxSvg\libs\libxml2\include;..\..\..\addons\ofxSvg\libs\libxml2\include\libxml;..\..\..\addons\ofxSvg\libs\libxml2\lib;..\..\..\addons\ofxSvg\libs\libxml2\lib\vs;..\..\..\addons\ofxSvg\libs\libxml2\lib\vs\Win32;..\..\..\addons\ofxSvg\libs\libxml2\lib\vs\x64;..\..\..\addons\ofxSvg\libs\libxml2\license;..\..\..\addons\ofxSvg\libs\svgtiny;..\..\..\addons\ofxSvg\libs\svgtiny\include;..\..\..\addons\ofxSvg\libs\svgtiny\lib;..\..\..\addons\ofxSvg\libs\svgtiny\lib\vs;..\..\..\addons\ofxSvg\libs\svgtiny\lib\vs\Win32;..\..\..\addons\ofxSvg\libs\svgtiny\lib\vs\x64;..\..\..\addons\ofxSvg\libs\svgtiny\license;..\..\..\addons\ofxSvg\src;..\..\..\addons\ofxUIUtils\src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src;..\..\..\addons\ofxShivaVG\libs;..\..\..\addons\ofxShivaVG\libs\ShivaVG;..\..\..\addons\ofxShivaVG\libs\ShivaVG\include;..\..\..\addons\ofxShivaVG\libs\ShivaVG\include\vg;..\..\..\addons\ofxShivaVG\libs\ShivaVG\src;..\..\..\addons\ofxShivaVG\src;..\..\..\addons\ofxSplashScreen\src;..\..\..\addons\ofxSvg\libs;..\..\..\addons\ofxSvg\libs\libxml2;..\..\..\addons\ofxSvg\libs\libxml2\include;..\..\..\addons\ofxSvg\libs\libxml2\include\libxml;..\..\..\addons\ofxSvg\libs\libxml2\lib;..\..\..\addons\ofxSvg\libs\libxml2\lib\vs;..\..\..\addons\ofxSvg\libs\libxml2\lib\vs\Win32;..\..\..\addons\ofxSvg\libs\libxml2\lib\vs\x64;..\..\..\addons\ofxSvg\libs\libxml2\license;..\..\..\addons\ofxSvg\libs\svgtiny;..\..\..\addons\ofxSvg\libs\svgtiny\include;..\..\..\addons\ofxSvg\libs\svgtiny\lib;..\..\..\addons\ofxSvg\libs\svgtiny\lib\vs;..\..\..\addons\ofxSvg\libs\svgtiny\lib\vs\Win32;..\..\..\addons\ofxSvg\libs\svgtiny\lib\vs\x64;..\..\..\addons\ofxSvg\libs\svgtiny\license;..\..\..\addons\ofxSvg\src;..\..\..\addons\ofxUIUtils\src</AdditionalIncludeDirectories>
       <CompileAs>CompileAsCpp</CompileAs>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
@@ -142,7 +142,7 @@
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src;..\..\..\addons\ofxSplashScreen\src;..\..\..\addons\ofxSvg\libs;..\..\..\addons\ofxSvg\libs\libxml2;..\..\..\addons\ofxSvg\libs\libxml2\include;..\..\..\addons\ofxSvg\libs\libxml2\include\libxml;..\..\..\addons\ofxSvg\libs\libxml2\lib;..\..\..\addons\ofxSvg\libs\libxml2\lib\vs;..\..\..\addons\ofxSvg\libs\libxml2\lib\vs\Win32;..\..\..\addons\ofxSvg\libs\libxml2\lib\vs\x64;..\..\..\addons\ofxSvg\libs\libxml2\license;..\..\..\addons\ofxSvg\libs\svgtiny;..\..\..\addons\ofxSvg\libs\svgtiny\include;..\..\..\addons\ofxSvg\libs\svgtiny\lib;..\..\..\addons\ofxSvg\libs\svgtiny\lib\vs;..\..\..\addons\ofxSvg\libs\svgtiny\lib\vs\Win32;..\..\..\addons\ofxSvg\libs\svgtiny\lib\vs\x64;..\..\..\addons\ofxSvg\libs\svgtiny\license;..\..\..\addons\ofxSvg\src;..\..\..\addons\ofxUIUtils\src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src;..\..\..\addons\ofxShivaVG\libs;..\..\..\addons\ofxShivaVG\libs\ShivaVG;..\..\..\addons\ofxShivaVG\libs\ShivaVG\include;..\..\..\addons\ofxShivaVG\libs\ShivaVG\include\vg;..\..\..\addons\ofxShivaVG\libs\ShivaVG\src;..\..\..\addons\ofxShivaVG\src;..\..\..\addons\ofxSplashScreen\src;..\..\..\addons\ofxSvg\libs;..\..\..\addons\ofxSvg\libs\libxml2;..\..\..\addons\ofxSvg\libs\libxml2\include;..\..\..\addons\ofxSvg\libs\libxml2\include\libxml;..\..\..\addons\ofxSvg\libs\libxml2\lib;..\..\..\addons\ofxSvg\libs\libxml2\lib\vs;..\..\..\addons\ofxSvg\libs\libxml2\lib\vs\Win32;..\..\..\addons\ofxSvg\libs\libxml2\lib\vs\x64;..\..\..\addons\ofxSvg\libs\libxml2\license;..\..\..\addons\ofxSvg\libs\svgtiny;..\..\..\addons\ofxSvg\libs\svgtiny\include;..\..\..\addons\ofxSvg\libs\svgtiny\lib;..\..\..\addons\ofxSvg\libs\svgtiny\lib\vs;..\..\..\addons\ofxSvg\libs\svgtiny\lib\vs\Win32;..\..\..\addons\ofxSvg\libs\svgtiny\lib\vs\x64;..\..\..\addons\ofxSvg\libs\svgtiny\license;..\..\..\addons\ofxSvg\src;..\..\..\addons\ofxUIUtils\src</AdditionalIncludeDirectories>
       <CompileAs>CompileAsCpp</CompileAs>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
@@ -164,7 +164,7 @@
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src;..\..\..\addons\ofxSplashScreen\src;..\..\..\addons\ofxSvg\libs;..\..\..\addons\ofxSvg\libs\libxml2;..\..\..\addons\ofxSvg\libs\libxml2\include;..\..\..\addons\ofxSvg\libs\libxml2\include\libxml;..\..\..\addons\ofxSvg\libs\libxml2\lib;..\..\..\addons\ofxSvg\libs\libxml2\lib\vs;..\..\..\addons\ofxSvg\libs\libxml2\lib\vs\Win32;..\..\..\addons\ofxSvg\libs\libxml2\lib\vs\x64;..\..\..\addons\ofxSvg\libs\libxml2\license;..\..\..\addons\ofxSvg\libs\svgtiny;..\..\..\addons\ofxSvg\libs\svgtiny\include;..\..\..\addons\ofxSvg\libs\svgtiny\lib;..\..\..\addons\ofxSvg\libs\svgtiny\lib\vs;..\..\..\addons\ofxSvg\libs\svgtiny\lib\vs\Win32;..\..\..\addons\ofxSvg\libs\svgtiny\lib\vs\x64;..\..\..\addons\ofxSvg\libs\svgtiny\license;..\..\..\addons\ofxSvg\src;..\..\..\addons\ofxUIUtils\src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src;..\..\..\addons\ofxShivaVG\libs;..\..\..\addons\ofxShivaVG\libs\ShivaVG;..\..\..\addons\ofxShivaVG\libs\ShivaVG\include;..\..\..\addons\ofxShivaVG\libs\ShivaVG\include\vg;..\..\..\addons\ofxShivaVG\libs\ShivaVG\src;..\..\..\addons\ofxShivaVG\src;..\..\..\addons\ofxSplashScreen\src;..\..\..\addons\ofxSvg\libs;..\..\..\addons\ofxSvg\libs\libxml2;..\..\..\addons\ofxSvg\libs\libxml2\include;..\..\..\addons\ofxSvg\libs\libxml2\include\libxml;..\..\..\addons\ofxSvg\libs\libxml2\lib;..\..\..\addons\ofxSvg\libs\libxml2\lib\vs;..\..\..\addons\ofxSvg\libs\libxml2\lib\vs\Win32;..\..\..\addons\ofxSvg\libs\libxml2\lib\vs\x64;..\..\..\addons\ofxSvg\libs\libxml2\license;..\..\..\addons\ofxSvg\libs\svgtiny;..\..\..\addons\ofxSvg\libs\svgtiny\include;..\..\..\addons\ofxSvg\libs\svgtiny\lib;..\..\..\addons\ofxSvg\libs\svgtiny\lib\vs;..\..\..\addons\ofxSvg\libs\svgtiny\lib\vs\Win32;..\..\..\addons\ofxSvg\libs\svgtiny\lib\vs\x64;..\..\..\addons\ofxSvg\libs\svgtiny\license;..\..\..\addons\ofxSvg\src;..\..\..\addons\ofxUIUtils\src</AdditionalIncludeDirectories>
       <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
     <Link>
@@ -182,6 +182,20 @@
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\ofApp.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxShivaVG\src\ofxShivaVGRenderer.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxShivaVG\src\simpleVGContext.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxShivaVG\src\simpleVGPath.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxShivaVG\libs\ShivaVG\src\shArrays.c" />
+    <ClCompile Include="..\..\..\addons\ofxShivaVG\libs\ShivaVG\src\shContext.c" />
+    <ClCompile Include="..\..\..\addons\ofxShivaVG\libs\ShivaVG\src\shExtensions.c" />
+    <ClCompile Include="..\..\..\addons\ofxShivaVG\libs\ShivaVG\src\shGeometry.c" />
+    <ClCompile Include="..\..\..\addons\ofxShivaVG\libs\ShivaVG\src\shImage.c" />
+    <ClCompile Include="..\..\..\addons\ofxShivaVG\libs\ShivaVG\src\shPaint.c" />
+    <ClCompile Include="..\..\..\addons\ofxShivaVG\libs\ShivaVG\src\shParams.c" />
+    <ClCompile Include="..\..\..\addons\ofxShivaVG\libs\ShivaVG\src\shPath.c" />
+    <ClCompile Include="..\..\..\addons\ofxShivaVG\libs\ShivaVG\src\shPipeline.c" />
+    <ClCompile Include="..\..\..\addons\ofxShivaVG\libs\ShivaVG\src\shVectors.c" />
+    <ClCompile Include="..\..\..\addons\ofxShivaVG\libs\ShivaVG\src\shVgu.c" />
     <ClCompile Include="..\..\..\addons\ofxSplashScreen\src\ofxSplashScreen.cpp" />
     <ClCompile Include="..\..\..\addons\ofxSvg\src\ofxSvg.cpp" />
     <ClCompile Include="..\..\..\addons\ofxUIUtils\src\ofxClipboard.cpp" />
@@ -194,6 +208,21 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ofApp.h" />
+    <ClInclude Include="..\..\..\addons\ofxShivaVG\src\ofxShivaVGRenderer.h" />
+    <ClInclude Include="..\..\..\addons\ofxShivaVG\src\simpleVGContext.h" />
+    <ClInclude Include="..\..\..\addons\ofxShivaVG\src\simpleVGPath.h" />
+    <ClInclude Include="..\..\..\addons\ofxShivaVG\libs\ShivaVG\include\vg\openvg.h" />
+    <ClInclude Include="..\..\..\addons\ofxShivaVG\libs\ShivaVG\include\vg\vgu.h" />
+    <ClInclude Include="..\..\..\addons\ofxShivaVG\libs\ShivaVG\src\shArrayBase.h" />
+    <ClInclude Include="..\..\..\addons\ofxShivaVG\libs\ShivaVG\src\shArrays.h" />
+    <ClInclude Include="..\..\..\addons\ofxShivaVG\libs\ShivaVG\src\shContext.h" />
+    <ClInclude Include="..\..\..\addons\ofxShivaVG\libs\ShivaVG\src\shDefs.h" />
+    <ClInclude Include="..\..\..\addons\ofxShivaVG\libs\ShivaVG\src\shExtensions.h" />
+    <ClInclude Include="..\..\..\addons\ofxShivaVG\libs\ShivaVG\src\shGeometry.h" />
+    <ClInclude Include="..\..\..\addons\ofxShivaVG\libs\ShivaVG\src\shImage.h" />
+    <ClInclude Include="..\..\..\addons\ofxShivaVG\libs\ShivaVG\src\shPaint.h" />
+    <ClInclude Include="..\..\..\addons\ofxShivaVG\libs\ShivaVG\src\shPath.h" />
+    <ClInclude Include="..\..\..\addons\ofxShivaVG\libs\ShivaVG\src\shVectors.h" />
     <ClInclude Include="..\..\..\addons\ofxSplashScreen\src\ofxSplashScreen.h" />
     <ClInclude Include="..\..\..\addons\ofxSvg\src\ofxSvg.h" />
     <ClInclude Include="..\..\..\addons\ofxSvg\libs\libxml2\include\libxml\c14n.h" />

@@ -1,3 +1,4 @@
+ofxShivaVG
 ofxSplashScreen
 ofxSvg
 ofxUIUtils
