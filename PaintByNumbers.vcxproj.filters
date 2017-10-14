@@ -61,18 +61,6 @@
 		<ClCompile Include="..\..\..\addons\ofxSvg\src\ofxSvg.cpp">
 			<Filter>addons\ofxSvg\src</Filter>
 		</ClCompile>
-		<ClCompile Include="..\..\..\addons\ofxSvg\libs\svgTiny\src\src_colors.cpp">
-			<Filter>addons\ofxSvg\libs\svgTiny\src</Filter>
-		</ClCompile>
-		<ClCompile Include="..\..\..\addons\ofxSvg\libs\svgTiny\src\svgtiny.cpp">
-			<Filter>addons\ofxSvg\libs\svgTiny\src</Filter>
-		</ClCompile>
-		<ClCompile Include="..\..\..\addons\ofxSvg\libs\svgTiny\src\svgtiny_gradient.cpp">
-			<Filter>addons\ofxSvg\libs\svgTiny\src</Filter>
-		</ClCompile>
-		<ClCompile Include="..\..\..\addons\ofxSvg\libs\svgTiny\src\svgtiny_list.cpp">
-			<Filter>addons\ofxSvg\libs\svgTiny\src</Filter>
-		</ClCompile>
 		<ClCompile Include="..\..\..\addons\ofxUIUtils\src\ofxClipboard.cpp">
 			<Filter>addons\ofxUIUtils\src</Filter>
 		</ClCompile>
@@ -93,18 +81,6 @@
 		</ClCompile>
 		<ClCompile Include="..\..\..\addons\ofxUIUtils\src\ofxUISlider.cpp">
 			<Filter>addons\ofxUIUtils\src</Filter>
-		</ClCompile>
-		<ClCompile Include="..\..\..\addons\ofxXmlSettings\src\ofxXmlSettings.cpp">
-			<Filter>addons\ofxXmlSettings\src</Filter>
-		</ClCompile>
-		<ClCompile Include="..\..\..\addons\ofxXmlSettings\libs\tinyxml.cpp">
-			<Filter>addons\ofxXmlSettings\libs</Filter>
-		</ClCompile>
-		<ClCompile Include="..\..\..\addons\ofxXmlSettings\libs\tinyxmlerror.cpp">
-			<Filter>addons\ofxXmlSettings\libs</Filter>
-		</ClCompile>
-		<ClCompile Include="..\..\..\addons\ofxXmlSettings\libs\tinyxmlparser.cpp">
-			<Filter>addons\ofxXmlSettings\libs</Filter>
 		</ClCompile>
 	</ItemGroup>
 	<ItemGroup>
@@ -150,26 +126,26 @@
 		<Filter Include="addons\ofxSvg\libs">
 			<UniqueIdentifier>{C226E9C6-88C9-1F12-D422-3DA3}</UniqueIdentifier>
 		</Filter>
-		<Filter Include="addons\ofxSvg\libs\svgTiny">
-			<UniqueIdentifier>{0A0E4783-DE3F-EB55-7775-3205}</UniqueIdentifier>
+		<Filter Include="addons\ofxSvg\libs\libxml2">
+			<UniqueIdentifier>{2C442542-20AF-917D-3852-0023}</UniqueIdentifier>
 		</Filter>
-		<Filter Include="addons\ofxSvg\libs\svgTiny\src">
-			<UniqueIdentifier>{668F2528-598B-D351-B74F-9E6F}</UniqueIdentifier>
+		<Filter Include="addons\ofxSvg\libs\libxml2\include">
+			<UniqueIdentifier>{738D0032-DFA1-33F3-D2B4-EA0A}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxSvg\libs\libxml2\include\libxml">
+			<UniqueIdentifier>{21145FAE-24D9-8981-96DC-87F0}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxSvg\libs\svgtiny">
+			<UniqueIdentifier>{972ABAEB-89C4-B27D-0968-4ED1}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxSvg\libs\svgtiny\include">
+			<UniqueIdentifier>{F663B0D8-0BED-1137-B2BC-17B3}</UniqueIdentifier>
 		</Filter>
 		<Filter Include="addons\ofxUIUtils">
 			<UniqueIdentifier>{3E53EA35-838B-2D4E-53B0-5EBC}</UniqueIdentifier>
 		</Filter>
 		<Filter Include="addons\ofxUIUtils\src">
 			<UniqueIdentifier>{DA8E9DF1-64BD-6852-C279-758D}</UniqueIdentifier>
-		</Filter>
-		<Filter Include="addons\ofxXmlSettings">
-			<UniqueIdentifier>{877F005D-13E6-0592-1D97-F2E3}</UniqueIdentifier>
-		</Filter>
-		<Filter Include="addons\ofxXmlSettings\src">
-			<UniqueIdentifier>{CCB2AC63-49D2-977C-CFE8-AEAD}</UniqueIdentifier>
-		</Filter>
-		<Filter Include="addons\ofxXmlSettings\libs">
-			<UniqueIdentifier>{687714A8-1662-FA1C-261F-50F0}</UniqueIdentifier>
 		</Filter>
 	</ItemGroup>
 	<ItemGroup>
@@ -230,11 +206,149 @@
 		<ClInclude Include="..\..\..\addons\ofxSvg\src\ofxSvg.h">
 			<Filter>addons\ofxSvg\src</Filter>
 		</ClInclude>
-		<ClInclude Include="..\..\..\addons\ofxSvg\libs\svgTiny\src\svgtiny.h">
-			<Filter>addons\ofxSvg\libs\svgTiny\src</Filter>
+		<ClInclude Include="..\..\..\addons\ofxSvg\libs\libxml2\include\libxml\c14n.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
 		</ClInclude>
-		<ClInclude Include="..\..\..\addons\ofxSvg\libs\svgTiny\src\svgtiny_internal.h">
-			<Filter>addons\ofxSvg\libs\svgTiny\src</Filter>
+		<ClInclude Include="..\..\..\addons\ofxSvg\libs\libxml2\include\libxml\catalog.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxSvg\libs\libxml2\include\libxml\chvalid.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxSvg\libs\libxml2\include\libxml\debugXML.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxSvg\libs\libxml2\include\libxml\dict.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxSvg\libs\libxml2\include\libxml\DOCBparser.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxSvg\libs\libxml2\include\libxml\encoding.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxSvg\libs\libxml2\include\libxml\entities.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxSvg\libs\libxml2\include\libxml\globals.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxSvg\libs\libxml2\include\libxml\hash.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxSvg\libs\libxml2\include\libxml\HTMLparser.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxSvg\libs\libxml2\include\libxml\HTMLtree.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxSvg\libs\libxml2\include\libxml\list.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxSvg\libs\libxml2\include\libxml\nanoftp.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxSvg\libs\libxml2\include\libxml\nanohttp.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxSvg\libs\libxml2\include\libxml\parser.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxSvg\libs\libxml2\include\libxml\parserInternals.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxSvg\libs\libxml2\include\libxml\pattern.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxSvg\libs\libxml2\include\libxml\relaxng.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxSvg\libs\libxml2\include\libxml\SAX.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxSvg\libs\libxml2\include\libxml\SAX2.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxSvg\libs\libxml2\include\libxml\schemasInternals.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxSvg\libs\libxml2\include\libxml\schematron.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxSvg\libs\libxml2\include\libxml\threads.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxSvg\libs\libxml2\include\libxml\tree.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxSvg\libs\libxml2\include\libxml\uri.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxSvg\libs\libxml2\include\libxml\valid.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxSvg\libs\libxml2\include\libxml\xinclude.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxSvg\libs\libxml2\include\libxml\xlink.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxSvg\libs\libxml2\include\libxml\xmlautomata.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxSvg\libs\libxml2\include\libxml\xmlerror.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxSvg\libs\libxml2\include\libxml\xmlexports.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxSvg\libs\libxml2\include\libxml\xmlIO.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxSvg\libs\libxml2\include\libxml\xmlmemory.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxSvg\libs\libxml2\include\libxml\xmlmodule.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxSvg\libs\libxml2\include\libxml\xmlreader.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxSvg\libs\libxml2\include\libxml\xmlregexp.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxSvg\libs\libxml2\include\libxml\xmlsave.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxSvg\libs\libxml2\include\libxml\xmlschemas.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxSvg\libs\libxml2\include\libxml\xmlschemastypes.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxSvg\libs\libxml2\include\libxml\xmlstring.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxSvg\libs\libxml2\include\libxml\xmlunicode.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxSvg\libs\libxml2\include\libxml\xmlversion.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxSvg\libs\libxml2\include\libxml\xmlwriter.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxSvg\libs\libxml2\include\libxml\xpath.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxSvg\libs\libxml2\include\libxml\xpathInternals.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxSvg\libs\libxml2\include\libxml\xpointer.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxSvg\libs\svgtiny\include\svgtiny.h">
+			<Filter>addons\ofxSvg\libs\svgtiny\include</Filter>
 		</ClInclude>
 		<ClInclude Include="..\..\..\addons\ofxUIUtils\src\ofxClipboard.h">
 			<Filter>addons\ofxUIUtils\src</Filter>
@@ -262,12 +376,6 @@
 		</ClInclude>
 		<ClInclude Include="..\..\..\addons\ofxUIUtils\src\ofxUIUtils.h">
 			<Filter>addons\ofxUIUtils\src</Filter>
-		</ClInclude>
-		<ClInclude Include="..\..\..\addons\ofxXmlSettings\src\ofxXmlSettings.h">
-			<Filter>addons\ofxXmlSettings\src</Filter>
-		</ClInclude>
-		<ClInclude Include="..\..\..\addons\ofxXmlSettings\libs\tinyxml.h">
-			<Filter>addons\ofxXmlSettings\libs</Filter>
 		</ClInclude>
 	</ItemGroup>
 	<ItemGroup>

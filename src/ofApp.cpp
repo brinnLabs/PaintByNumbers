@@ -9,18 +9,8 @@ void ofApp::setup2() {
 	font.loadFont(OF_TTF_SANS, 14);
 
 	ofHideCursor();
+	InitializeDefaultSensor();
 
-	cursorIcon.load("bucket3.png");
-	cursorType = HAND;
-
-	ofFbo frameBuf = ofFbo();
-	frameBuf.allocate(35, 35);
-	frameBuf.begin(); {
-		cursorIcon.draw(0, 0, 35, 35);
-	} frameBuf.end();
-	tex = frameBuf.getTexture();
-
-	cursorIcon.load("hand.png");
 
 	string path = "svgs";
 	dir.setShowHidden(false);
@@ -38,11 +28,16 @@ void ofApp::setup2() {
 	}
 
 	currentImage = 0;
-	toolStatus = true;
 
-	colorPick.setup(HORIZONTAL_HALF_BRIGHTNESS, ofGetWidth() / 2, ofGetHeight() / 5);
+	colorPick.setup(VERTICAL_HALF_BRIGHTNESS, ofGetWidth() / 5, 3 * (ofGetHeight() / 4));
 
-	canvas = ofRectangle(ofGetWidth() / 25, ofGetHeight() / 25, ofGetWidth() * (23.0 / 25.0), ofGetHeight() * .8 - 2 * (ofGetHeight() / 25));
+	canvas = ofRectangle(ofGetWidth() / 5 + ofGetWidth() / 25, ofGetHeight() / 25, ofGetWidth() * (4.0 / 5.0) - 2 * (ofGetWidth() / 25), ofGetHeight() * (23.0 / 25.0));
+
+	shivaRenderer = ofPtr<ofxShivaVGRenderer>(new ofxShivaVGRenderer);
+	ofSetCurrentRenderer(shivaRenderer);
+
+	shivaRenderer->setLineCapStyle(VG_CAP_SQUARE);
+	shivaRenderer->setLineJoinStyle(VG_JOIN_MITER);
 
 	ofEnableSmoothing();
 	ofSetVerticalSync(false);
@@ -51,18 +46,11 @@ void ofApp::setup2() {
 	ofSetCurveResolution(50);
 
 	hand.setup("hand.png");
-	hand.setColor(ofColor::mediumSeaGreen);
-	hand.setID(1);
-	/*brush.setup("brush.png");
-	brush.setID(2);*/
+	reset.setup("Reset.png");
 	bucket.setup("bucket3.png");
-	bucket.setID(3);
 	eraser.setup("eraser.png");
-	eraser.setID(4);
 	forward.setup("forward.png");
-	forward.setID(5);
 	back.setup("back.png");
-	back.setID(6);
 
 	svgFrameTop.allocate(canvas.width, canvas.height);
 	svgFrameTop.begin(); {
@@ -74,7 +62,7 @@ void ofApp::setup2() {
 		ofPushMatrix(); {
 			ofTranslate(-canvas.x, -canvas.y);
 			float scale = MIN(canvas.width / drawnSvg.getWidth(), canvas.height / drawnSvg.getHeight());
-			ofTranslate(ofGetWidth() / 25 + canvas.width / 2 - (drawnSvg.getWidth()*scale) / 2, ofGetHeight() / 25 + canvas.height / 2 - (drawnSvg.getHeight()*scale) / 2);
+			ofTranslate(ofGetWidth() / 5 + ofGetWidth() / 25 + canvas.width / 2 - (drawnSvg.getWidth()*scale) / 2, ofGetHeight() / 25 + canvas.height / 2 - (drawnSvg.getHeight()*scale) / 2);
 			for (auto path : drawnSvg.getPaths()) {
 				path.setFilled(true);
 				path.setFillColor(ofColor::white);
@@ -88,15 +76,6 @@ void ofApp::setup2() {
 
 	ofBackground(ofColor::whiteSmoke);
 
-	ofAddListener(colorPick.pickerPickEvent, this, &ofApp::pickerSelected);
-	ofAddListener(colorPick.pickerMoveEvent, this, &ofApp::pickerMoved);
-	ofAddListener(hand.buttonEvent, this, &ofApp::buttonPressed);
-	//ofAddListener(brush.buttonEvent, this, &ofApp::buttonPressed);
-	ofAddListener(bucket.buttonEvent, this, &ofApp::buttonPressed);
-	ofAddListener(eraser.buttonEvent, this, &ofApp::buttonPressed);
-	ofAddListener(forward.buttonEvent, this, &ofApp::buttonPressed);
-	ofAddListener(back.buttonEvent, this, &ofApp::buttonPressed);
-
 	ofLogNotice("Finished Setup Process");
 	hasSetup = true;
 	this->splashScreen.end();
@@ -109,207 +88,290 @@ void ofApp::update() {
 	} if (ofGetFrameNum() == 1) {
 		this->setup2();
 	}
-	else {
-		if (ofGetElapsedTimeMillis() - moveCooldown > 666) {
-			if (hand.getIsHovering() || /*brush.getIsHovering() ||*/ bucket.getIsHovering() || eraser.getIsHovering()) {
-				switch (cursorType) {
-				case HAND:
-					if (!hand.getIsHovering()) {
-						if (!showHover) {
-							hoverCounter = ofGetElapsedTimeMillis();
-							showHover = true;
-						}
-					}
-					break;
-				case ERASER:
-					if (!eraser.getIsHovering()) {
-						if (!showHover) {
-							hoverCounter = ofGetElapsedTimeMillis();
-							showHover = true;
-						}
-					}
-					break;
-					/*case BRUSH:
-						if (!brush.getIsHovering()) {
-							if (!showHover) {
-								hoverCounter = ofGetElapsedTimeMillis();
-								showHover = true;
-							}
-						}
-						break;*/
-				case BUCKET:
-					if (!bucket.getIsHovering()) {
-						if (!showHover) {
-							hoverCounter = ofGetElapsedTimeMillis();
-							showHover = true;
-						}
-					}
-					break;
+	else if (hasSetup) {
+		if (m_pBodyFrameReader)
+		{
+			IBodyFrame* pBodyFrame = NULL;
+
+			HRESULT hr = m_pBodyFrameReader->AcquireLatestFrame(&pBodyFrame);
+
+			if (SUCCEEDED(hr))
+			{
+				IBody* ppBodies[BODY_COUNT] = { 0 };
+
+				if (SUCCEEDED(hr))
+				{
+					hr = pBodyFrame->GetAndRefreshBodyData(_countof(ppBodies), ppBodies);
 				}
-			}
-			else if (forward.getIsHovering() || back.getIsHovering()) {
-				if (!showHover) {
-					hoverCounter = ofGetElapsedTimeMillis();
-					showHover = true;
+
+				if (SUCCEEDED(hr))
+				{
+					ProcessBody(BODY_COUNT, ppBodies);
 				}
-			}
-			else if (ofRectangle(0, ofGetHeight() * (4.0 / 5.0), ofGetWidth() / 2, ofGetHeight() / 5).inside(mouseX, mouseY)) {
-				if (!showHover && movedColor != currentColor) {
-					hoverCounter = ofGetElapsedTimeMillis();
-					showHover = true;
+
+				for (int i = 0; i < _countof(ppBodies); ++i)
+				{
+					SafeRelease(ppBodies[i]);
 				}
-			}
-			else if (canvas.inside(mouseX, mouseY)) {
-				if (!showHover && cursorType != HAND) {
-					hoverCounter = ofGetElapsedTimeMillis();
-					showHover = true;
-				}
-			}
-			else {
-				showHover = false;
 			}
 
-			if (showHover && ofGetElapsedTimeMillis() - hoverCounter > 1000) {
-				showHover = false;
-				if (hand.getIsHovering()) {
-					cursorIcon.load("hand.png");
-					cursorType = HAND;
-					hand.setColor(ofColor::mediumSeaGreen);
-					eraser.setColor(255);
-					//brush.setColor(255);
-					bucket.setColor(255);
-				}
-				else if (eraser.getIsHovering()) {
-					cursorIcon.load("eraser.png");
-					cursorType = ERASER;
-					hand.setColor(255);
-					eraser.setColor(ofColor::mediumSeaGreen);
-					//brush.setColor(255);
-					bucket.setColor(255);
-				}
-				/*else if (brush.getIsHovering()) {
-					cursorIcon.load("brush.png");
-					cursorType = BRUSH;
-					hand.setColor(255);
-					eraser.setColor(255);
-					brush.setColor(ofColor::mediumSeaGreen);
-					bucket.setColor(255);
-				}*/
-				else if (bucket.getIsHovering()) {
-					cursorIcon.load("bucket2.png");
-					cursorType = BUCKET;
-					hand.setColor(255);
-					eraser.setColor(255);
-					//brush.setColor(255);
-					bucket.setColor(ofColor::mediumSeaGreen);
-				}
-				else if (forward.getIsHovering()) {
-					currentImage++;
-					currentImage %= dir.numFiles();
-					drawnSvg.load("svgs\\" + dir.getName(currentImage));
-					svgFrameTop.begin(); {
-						ofClear(255);
-					} svgFrameTop.end();
-					layerColors.clear();
-					svgFrame.begin(); {
-						ofClear(255);
-						ofPushMatrix(); {
-							ofTranslate(-canvas.x, -canvas.y);
-							float scale = MIN(canvas.width / drawnSvg.getWidth(), canvas.height / drawnSvg.getHeight());
-							ofTranslate(ofGetWidth() / 25 + canvas.width / 2 - (drawnSvg.getWidth()*scale) / 2, ofGetHeight() / 25 + canvas.height / 2 - (drawnSvg.getHeight()*scale) / 2);
-							for (auto path : drawnSvg.getPaths()) {
-								path.setFilled(true);
-								path.setFillColor(ofColor::white);
-								path.setStrokeWidth(1);
-								path.setStrokeColor(ofColor::black);
-								path.scale(scale, scale);
-								path.draw();
-								layerColors.push_back(ofColor::white);
-							}
-						} ofPopMatrix();
-					} svgFrame.end();
-				}
-				else if (back.getIsHovering()) {
-					currentImage--;
-					if (currentImage < 0) {
-						currentImage = dir.numFiles() - 1;
+
+			SafeRelease(pBodyFrame);
+		}
+		for (auto id : trackedHandIds) {
+			TrackedHand & lhand = hands.at(id).first; {
+				if (lhand.getHandState() == HandState_Closed && lhand.getHoverPeriod() > 1000) {
+					lhand.resetHoverCounter();
+					if (hand.getBoundingRect().inside(lhand.getHandCoordinate())) {
+						lhand.setCursor(HAND);
 					}
-					drawnSvg.load("svgs\\" + dir.getName(currentImage));
-					svgFrameTop.begin(); {
-						ofClear(255);
-					} svgFrameTop.end();
-					layerColors.clear();
-					svgFrame.begin(); {
-						ofClear(255);
-						ofPushMatrix(); {
-							ofTranslate(-canvas.x, -canvas.y);
-							float scale = MIN(canvas.width / drawnSvg.getWidth(), canvas.height / drawnSvg.getHeight());
-							ofTranslate(ofGetWidth() / 25 + canvas.width / 2 - (drawnSvg.getWidth()*scale) / 2, ofGetHeight() / 25 + canvas.height / 2 - (drawnSvg.getHeight()*scale) / 2);
-							for (auto path : drawnSvg.getPaths()) {
-								path.setFilled(true);
-								path.setFillColor(ofColor::white);
-								path.setStrokeWidth(1);
-								path.setStrokeColor(ofColor::black);
-								path.scale(scale, scale);
-								path.draw();
-								layerColors.push_back(ofColor::white);
-							}
-						} ofPopMatrix();
-					} svgFrame.end();
-				}
-				else if (ofRectangle(0, ofGetHeight() * (4.0 / 5.0), ofGetWidth() / 2, ofGetHeight() / 5).inside(mouseX, mouseY)) {
-					currentColor = movedColor;
-					toolStatus = false;
-				}
-				else if (canvas.inside(mouseX, mouseY)) {
-					if (cursorType != BUCKET && cursorType != ERASER) {
-						toolStatus = !toolStatus;
+					else if (eraser.getBoundingRect().inside(lhand.getHandCoordinate())) {
+						lhand.setCursor(ERASER);
 					}
-					else {
-						//paint the first reverse layer
-						auto svgVec = drawnSvg.getPaths();
-						reverse(svgVec.begin(), svgVec.end());
-						float scale = MIN(canvas.width / drawnSvg.getWidth(), canvas.height / drawnSvg.getHeight());
-						int counter = 0;
-						for (auto path : svgVec) {
-							path.setStrokeWidth(1);
-							path.scale(scale, scale);
-							ofPolyline fullPoly = ofPolyline();
-							for (auto polyline : path.getOutline()) {
-								fullPoly.addVertices(polyline.getVertices());
-							}
-							fullPoly.setClosed(true);
-							if (fullPoly.size() > 0 && fullPoly.inside(mouseX - (/*canvas.x + */(ofGetWidth() / 25 + canvas.width / 2 - (drawnSvg.getWidth()*scale) / 2)), mouseY - ((ofGetHeight() / 25 + canvas.height / 2 - (drawnSvg.getHeight()*scale) / 2)))) {
-								if (cursorType == BUCKET) {
-									layerColors[counter] = currentColor;
-								}
-								else {
-									layerColors[counter] = ofColor::white;
-								}
-								break;
-							}
-							counter++;
+					else if (bucket.getBoundingRect().inside(lhand.getHandCoordinate())) {
+						lhand.setCursor(BUCKET);
+					}
+					else if (reset.getBoundingRect().inside(lhand.getHandCoordinate())) {
+						svgFrameTop.begin(); {
+							ofClear(255);
+						} svgFrameTop.end();
+						for (auto & layer : layerColors) {
+							layer = ofColor::white;
 						}
-						counter = 1;
-						for (auto path : drawnSvg.getPaths()) {
-							path.scale(scale, scale);
-							path.setFilled(true);
-							path.setStrokeWidth(1);
-							path.setStrokeColor(ofColor::black);
-							path.setFillColor(layerColors[drawnSvg.getPaths().size() - counter]);
-							svgFrameTop.begin(); {
-								ofPushMatrix(); {
-									ofTranslate(-canvas.x, -canvas.y);
-									ofTranslate(ofGetWidth() / 25 + canvas.width / 2 - (drawnSvg.getWidth()*scale) / 2, ofGetHeight() / 25 + canvas.height / 2 - (drawnSvg.getHeight()*scale) / 2);
+					}
+					else if (forward.getBoundingRect().inside(lhand.getHandCoordinate())) {
+						currentImage++;
+						currentImage %= dir.numFiles();
+						drawnSvg.load("svgs\\" + dir.getName(currentImage));
+						svgFrameTop.begin(); {
+							ofClear(255);
+						} svgFrameTop.end();
+						layerColors.clear();
+						svgFrame.begin(); {
+							ofClear(255);
+							ofPushMatrix(); {
+								ofTranslate(-canvas.x, -canvas.y);
+								float scale = MIN(canvas.width / drawnSvg.getWidth(), canvas.height / drawnSvg.getHeight());
+								ofTranslate(ofGetWidth() / 5 + ofGetWidth() / 25 + canvas.width / 2 - (drawnSvg.getWidth()*scale) / 2, ofGetHeight() / 25 + canvas.height / 2 - (drawnSvg.getHeight()*scale) / 2);
+								for (auto path : drawnSvg.getPaths()) {
+									path.setFilled(true);
+									path.setFillColor(ofColor::white);
+									path.setStrokeWidth(1);
+									path.setStrokeColor(ofColor::black);
+									path.scale(scale, scale);
 									path.draw();
-								} ofPopMatrix();
-							} svgFrameTop.end();
-							counter++;
+									layerColors.push_back(ofColor::white);
+								}
+							} ofPopMatrix();
+						} svgFrame.end();
+					}
+					else if (back.getBoundingRect().inside(lhand.getHandCoordinate())) {
+						currentImage--;
+						if (currentImage < 0) {
+							currentImage = dir.numFiles() - 1;
+						}
+						drawnSvg.load("svgs\\" + dir.getName(currentImage));
+						svgFrameTop.begin(); {
+							ofClear(255);
+						} svgFrameTop.end();
+						layerColors.clear();
+						svgFrame.begin(); {
+							ofClear(255);
+							ofPushMatrix(); {
+								ofTranslate(-canvas.x, -canvas.y);
+								float scale = MIN(canvas.width / drawnSvg.getWidth(), canvas.height / drawnSvg.getHeight());
+								ofTranslate(ofGetWidth() / 5 + ofGetWidth() / 25 + canvas.width / 2 - (drawnSvg.getWidth()*scale) / 2, ofGetHeight() / 25 + canvas.height / 2 - (drawnSvg.getHeight()*scale) / 2);
+								for (auto path : drawnSvg.getPaths()) {
+									path.setFilled(true);
+									path.setFillColor(ofColor::white);
+									path.setStrokeWidth(1);
+									path.setStrokeColor(ofColor::black);
+									path.scale(scale, scale);
+									path.draw();
+									layerColors.push_back(ofColor::white);
+								}
+							} ofPopMatrix();
+						} svgFrame.end();
+					}
+					else if (ofRectangle(0, 0, ofGetWidth() / 5, 3 * (ofGetHeight() / 4)).inside(lhand.getHandCoordinate())) {
+						lhand.setCurrentColor(colorPick.getColorAt(lhand.getHandCoordinate()));
+					}
+					else if (canvas.inside(lhand.getHandCoordinate())) {
+						if (lhand.getCursor() != BUCKET && lhand.getCursor() != ERASER) {
+							//do nothing currently
+						}
+						else {
+							//paint the first reverse layer
+							auto svgVec = drawnSvg.getPaths();
+							reverse(svgVec.begin(), svgVec.end());
+							float scale = MIN(canvas.width / drawnSvg.getWidth(), canvas.height / drawnSvg.getHeight());
+							int counter = 0;
+							for (auto path : svgVec) {
+								path.setStrokeWidth(1);
+								path.scale(scale, scale);
+								ofPolyline fullPoly = ofPolyline();
+								for (auto polyline : path.getOutline()) {
+									fullPoly.addVertices(polyline.getVertices());
+								}
+								fullPoly.setClosed(true);
+								if (fullPoly.size() > 0 && fullPoly.inside(lhand.getHandCoordinate().x - ((ofGetWidth() / 5 + ofGetWidth() / 25 + canvas.width / 2 - (drawnSvg.getWidth()*scale) / 2)), lhand.getHandCoordinate().y - ((ofGetHeight() / 25 + canvas.height / 2 - (drawnSvg.getHeight()*scale) / 2)))) {
+									if (lhand.getCursor() == BUCKET) {
+										layerColors[counter] = lhand.getCurrentColor();
+									}
+									else {
+										layerColors[counter] = ofColor::white;
+									}
+									break;
+								}
+								counter++;
+							}
+							counter = 1;
+							for (auto path : drawnSvg.getPaths()) {
+								path.scale(scale, scale);
+								path.setFilled(true);
+								path.setStrokeWidth(1);
+								path.setStrokeColor(ofColor::black);
+								path.setFillColor(layerColors[drawnSvg.getPaths().size() - counter]);
+								svgFrameTop.begin(); {
+									ofPushMatrix(); {
+										ofTranslate(-canvas.x, -canvas.y);
+										ofTranslate(ofGetWidth() / 5 + ofGetWidth() / 25 + canvas.width / 2 - (drawnSvg.getWidth()*scale) / 2, ofGetHeight() / 25 + canvas.height / 2 - (drawnSvg.getHeight()*scale) / 2);
+										path.draw();
+									} ofPopMatrix();
+								} svgFrameTop.end();
+								counter++;
+							}
 						}
 					}
-					moveCooldown = ofGetElapsedTimeMillis();
 				}
 			}
+			TrackedHand  & rhand = hands.at(id).second; {
+				if (rhand.getHandState() == HandState_Closed && rhand.getHoverPeriod() > 1000) {
+					rhand.resetHoverCounter();
+					if (hand.getBoundingRect().inside(rhand.getHandCoordinate())) {
+						rhand.setCursor(HAND);
+					}
+					else if (eraser.getBoundingRect().inside(rhand.getHandCoordinate())) {
+						rhand.setCursor(ERASER);
+					}
+					else if (bucket.getBoundingRect().inside(rhand.getHandCoordinate())) {
+						rhand.setCursor(BUCKET);
+					}
+					else if (reset.getBoundingRect().inside(rhand.getHandCoordinate())) {
+						svgFrameTop.begin(); {
+							ofClear(255);
+						} svgFrameTop.end();
+						for (auto & layer : layerColors) {
+							layer = ofColor::white;
+						}
+					}
+					else if (forward.getBoundingRect().inside(rhand.getHandCoordinate())) {
+						currentImage++;
+						currentImage %= dir.numFiles();
+						drawnSvg.load("svgs\\" + dir.getName(currentImage));
+						svgFrameTop.begin(); {
+							ofClear(255);
+						} svgFrameTop.end();
+						layerColors.clear();
+						svgFrame.begin(); {
+							ofClear(255);
+							ofPushMatrix(); {
+								ofTranslate(-canvas.x, -canvas.y);
+								float scale = MIN(canvas.width / drawnSvg.getWidth(), canvas.height / drawnSvg.getHeight());
+								ofTranslate(ofGetWidth() / 5 + ofGetWidth() / 25 + canvas.width / 2 - (drawnSvg.getWidth()*scale) / 2, ofGetHeight() / 25 + canvas.height / 2 - (drawnSvg.getHeight()*scale) / 2);
+								for (auto path : drawnSvg.getPaths()) {
+									path.setFilled(true);
+									path.setFillColor(ofColor::white);
+									path.setStrokeWidth(1);
+									path.setStrokeColor(ofColor::black);
+									path.scale(scale, scale);
+									path.draw();
+									layerColors.push_back(ofColor::white);
+								}
+							} ofPopMatrix();
+						} svgFrame.end();
+					}
+					else if (back.getBoundingRect().inside(rhand.getHandCoordinate())) {
+						currentImage--;
+						if (currentImage < 0) {
+							currentImage = dir.numFiles() - 1;
+						}
+						drawnSvg.load("svgs\\" + dir.getName(currentImage));
+						svgFrameTop.begin(); {
+							ofClear(255);
+						} svgFrameTop.end();
+						layerColors.clear();
+						svgFrame.begin(); {
+							ofClear(255);
+							ofPushMatrix(); {
+								ofTranslate(-canvas.x, -canvas.y);
+								float scale = MIN(canvas.width / drawnSvg.getWidth(), canvas.height / drawnSvg.getHeight());
+								ofTranslate(ofGetWidth() / 5 + ofGetWidth() / 25 + canvas.width / 2 - (drawnSvg.getWidth()*scale) / 2, ofGetHeight() / 25 + canvas.height / 2 - (drawnSvg.getHeight()*scale) / 2);
+								for (auto path : drawnSvg.getPaths()) {
+									path.setFilled(true);
+									path.setFillColor(ofColor::white);
+									path.setStrokeWidth(1);
+									path.setStrokeColor(ofColor::black);
+									path.scale(scale, scale);
+									path.draw();
+									layerColors.push_back(ofColor::white);
+								}
+							} ofPopMatrix();
+						} svgFrame.end();
+					}
+					else if (ofRectangle(0, 0, ofGetWidth() / 5, 3 * (ofGetHeight() / 4)).inside(rhand.getHandCoordinate())) {
+						rhand.setCurrentColor(colorPick.getColorAt(rhand.getHandCoordinate()));
+					}
+					else if (canvas.inside(rhand.getHandCoordinate())) {
+						if (rhand.getCursor() != BUCKET && rhand.getCursor() != ERASER) {
+							//do nothing currently
+						}
+						else {
+							//paint the first reverse layer
+							auto svgVec = drawnSvg.getPaths();
+							reverse(svgVec.begin(), svgVec.end());
+							float scale = MIN(canvas.width / drawnSvg.getWidth(), canvas.height / drawnSvg.getHeight());
+							int counter = 0;
+							for (auto path : svgVec) {
+								path.setStrokeWidth(1);
+								path.scale(scale, scale);
+								ofPolyline fullPoly = ofPolyline();
+								for (auto polyline : path.getOutline()) {
+									fullPoly.addVertices(polyline.getVertices());
+								}
+								fullPoly.setClosed(true);
+								if (fullPoly.size() > 0 && fullPoly.inside(rhand.getHandCoordinate().x - ((ofGetWidth() / 5 + ofGetWidth() / 25 + canvas.width / 2 - (drawnSvg.getWidth()*scale) / 2)), rhand.getHandCoordinate().y - ((ofGetHeight() / 25 + canvas.height / 2 - (drawnSvg.getHeight()*scale) / 2)))) {
+									if (rhand.getCursor() == BUCKET) {
+										layerColors[counter] = rhand.getCurrentColor();
+									}
+									else {
+										layerColors[counter] = ofColor::white;
+									}
+									break;
+								}
+								counter++;
+							}
+							counter = 1;
+							for (auto path : drawnSvg.getPaths()) {
+								path.scale(scale, scale);
+								path.setFilled(true);
+								path.setStrokeWidth(1);
+								path.setStrokeColor(ofColor::black);
+								path.setFillColor(layerColors[drawnSvg.getPaths().size() - counter]);
+								svgFrameTop.begin(); {
+									ofPushMatrix(); {
+										ofTranslate(-canvas.x, -canvas.y);
+										ofTranslate(ofGetWidth() / 5 + ofGetWidth() / 25 + canvas.width / 2 - (drawnSvg.getWidth()*scale) / 2, ofGetHeight() / 25 + canvas.height / 2 - (drawnSvg.getHeight()*scale) / 2);
+										path.draw();
+									} ofPopMatrix();
+								} svgFrameTop.end();
+								counter++;
+							}
+						}
+					}
+				}
+			}
+
 		}
 	}
 }
@@ -318,98 +380,56 @@ void ofApp::update() {
 void ofApp::draw() {
 	if (hasSetup) {
 		ofSetColor(255);
-
-		ofSetColor(0);
-		ofDrawBitmapString("FPS: " + ofToString(ofGetFrameRate()), 20, 20);
-
-		ofSetColor(255);
 		ofRect(canvas);
 
 		svgFrame.draw(canvas.x, canvas.y);
 		svgFrameTop.draw(canvas.x, canvas.y);
 
-		hand.draw(ofGetWidth() / 2, ofGetHeight() * (4.0 / 5.0), ofGetWidth() / 8, ofGetHeight() / 5);
-		//brush.draw(ofGetWidth() / 2 + ofGetWidth() / 8, ofGetHeight() * (4.0 / 5.0), ofGetWidth() / 8, ofGetHeight() / 5);
-		bucket.draw(ofGetWidth() / 2 + ofGetWidth() / 8, ofGetHeight() * (4.0 / 5.0), ofGetWidth() / 8, ofGetHeight() / 5);
-		eraser.draw(ofGetWidth() / 2 + 2 * ofGetWidth() / 8, ofGetHeight() * (4.0 / 5.0), ofGetWidth() / 8, ofGetHeight() / 5);
-		//reset.draw(ofGetWidth() / 2 + 3 * ofGetWidth() / 8, ofGetHeight() * (4.0 / 5.0), ofGetWidth() / 8, ofGetHeight() / 5);
+		hand.draw(0, ofGetHeight() * (3.0 / 4.0), ofGetWidth() / 10, ofGetHeight() / 8);
+		bucket.draw(ofGetWidth() / 10, ofGetHeight() * (3.0 / 4.0), ofGetWidth() / 10, ofGetHeight() / 8);
+		eraser.draw(0, ofGetHeight() * (7.0 / 8.0), ofGetWidth() / 10, ofGetHeight() / 8);
+		reset.draw(ofGetWidth() / 10, ofGetHeight() * (7.0 / 8.0), ofGetWidth() / 10, ofGetHeight() / 8);
 		forward.draw(ofGetWidth() * (24 / 25.0), canvas.getCenter().y - 50, ofGetWidth() / 25, 100);
-		back.draw(0, canvas.getCenter().y - 50, ofGetWidth() / 25, 100);
+		back.draw(ofGetWidth() / 5, canvas.getCenter().y - 50, ofGetWidth() / 25, 100);
 
-		colorPick.draw(0, ofGetHeight() * (4.0 / 5.0), ofGetWidth() / 2, ofGetHeight() / 5);
-		ofRectangle colorRect = ofRectangle(0, ofGetHeight() * (4.0 / 5.0), ofGetWidth() / 2, ofGetHeight() / 5);
-		if (colorRect.inside(mouseX, mouseY)) {
-			ofSetColor(ofColor::darkGray);
-			ofBeginShape(); {
-				ofVertex(mouseX, mouseY);
-				ofVertex(mouseX + 3, mouseY - 42);
-				ofVertex(mouseX + 42, mouseY - 3);
-			} ofEndShape(OF_CLOSE);
-			ofRectRounded(mouseX + 3, mouseY - 47, 44, 44, 2);
-			ofSetColor(movedColor);
-			ofRectRounded(mouseX + 5, mouseY - 45, 40, 40, 2);
-			if (movedColor == currentColor) {
-				tex.draw(mouseX + 7.5, mouseY - 42.5, 35, 35);
-			}
-		}
+		colorPick.draw(0, 0, ofGetWidth() / 5, 3 * (ofGetHeight() / 4));
+		ofRectangle colorRect = ofRectangle(0, 0, ofGetWidth() / 5, 3 * (ofGetHeight() / 4));
 
-
-		if (showHover) {
-			if (!colorRect.inside(mouseX, mouseY)) {
-				ofPushStyle();
-				ofPushMatrix();
-				ofTranslate(mouseX + 17.5, mouseY + 17.5, 0);
-				ofSetColor(ofColor::slateGray);
-				ofCircle(0, 0, 30);
-				ofFill();
-				ofSetColor(ofColor::greenYellow);
-				ofBeginShape();
-
-
-				float angleStep = TWO_PI / 60;
-				float radius = 28;
-
-				ofVertex(0, 0);
-				for (int i = 0; i < fmod(((ofGetElapsedTimeMillis() - hoverCounter) / 16.3), 61); i++) {
-					float anglef = (i)* angleStep;
-					float x = radius * sin(anglef);
-					float y = radius * -cos(anglef);
-					ofVertex(x, y);
+		for (auto id : trackedHandIds) {
+			TrackedHand lhand = hands.at(id).first; {
+				if (colorRect.inside(lhand.getHandCoordinate())) {
+					lhand.drawHoverColor(colorPick.getColorAt(lhand.getHandCoordinate()));
 				}
-				ofVertex(0, 0);
-				ofEndShape(OF_CLOSE);
-				ofPopMatrix();
-				ofPopStyle();
+
+				else {
+					if (lhand.getHandState() == HandState_Closed && lhand.getHoverPeriod() < 1000 && lhand.getHoverPeriod() > 0) {
+						lhand.drawHover();
+					}
+					lhand.draw();
+				}
 			}
-			else {
-				ofImage img = ofImage("bucket3.png");
-				ofSetColor(255);
-				img.draw(mouseX + 7.5, mouseY - 42.5, 35, 35);
-				ofSetColor(movedColor);
-				float yprct = 35 * ((ofGetElapsedTimeMillis() - hoverCounter) / 1000.0);
-				tex.drawSubsection(mouseX + 7.5, mouseY - 42.5 + (35 - yprct), 35, yprct, 0, 35 - yprct);
+			TrackedHand rhand = hands.at(id).second; {
+				if (colorRect.inside(rhand.getHandCoordinate())) {
+						rhand.drawHoverColor(colorPick.getColorAt(rhand.getHandCoordinate()));
+				}
+
+				else {
+					if (rhand.getHandState() == HandState_Closed && rhand.getHoverPeriod() < 1000 && rhand.getHoverPeriod() > 0) {
+						rhand.drawHover();
+					}
+					rhand.draw();
+				}
 			}
 		}
 
-		if (!colorRect.inside(mouseX, mouseY)) {
-			switch (cursorType) {
-			case HAND:
-			case ERASER:
-				ofSetColor(255);
-				break;
-			case BRUSH:
-			case BUCKET:
-				ofSetColor(currentColor);
-				break;
-			}
-			cursorIcon.draw(mouseX, mouseY, 35, 35);
-		}
 	}
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key) {
-
+	if (key == 'f') {
+		ofToggleFullscreen();
+	}
 }
 
 //--------------------------------------------------------------
@@ -419,27 +439,6 @@ void ofApp::keyReleased(int key) {
 
 //--------------------------------------------------------------
 void ofApp::mouseMoved(int x, int y) {
-	moveCooldown = ofGetElapsedTimeMillis();
-	showHover = false;
-	if (canvas.inside(x, y) && toolStatus) {
-		svgFrameTop.begin(); {
-			ofTranslate(-canvas.x, -canvas.y);
-			switch (cursorType) {
-			case BRUSH_ERASER:
-				ofSetColor(255);
-				ofCircle(x, y, 5);
-				break;
-			case BRUSH:
-				ofSetColor(currentColor);
-				ofCircle(x, y, 5);
-				break;
-			case BUCKET:
-			case HAND:
-			case ERASER:
-				break;
-			}
-		} svgFrameTop.end();
-	}
 }
 
 //--------------------------------------------------------------
@@ -469,19 +468,22 @@ void ofApp::mouseExited(int x, int y) {
 
 //--------------------------------------------------------------
 void ofApp::windowResized(int w, int h) {
-	colorPick.setup(HORIZONTAL_HALF_BRIGHTNESS, ofGetWidth() / 2, ofGetHeight() / 5);
-	canvas = ofRectangle(ofGetWidth() / 25, ofGetHeight() / 25, ofGetWidth() * (23.0 / 25.0), ofGetHeight() * .8 - 2 * (ofGetHeight() / 25));
+	colorPick.setup(VERTICAL_HALF_BRIGHTNESS, ofGetWidth() / 5, 3 * (ofGetHeight() / 4));
+
+	canvas = ofRectangle(ofGetWidth() / 5 + ofGetWidth() / 25, ofGetHeight() / 25, ofGetWidth() * (4.0 / 5.0) - 2 * (ofGetWidth() / 25), ofGetHeight() * (23.0 / 25.0));
+
 	svgFrameTop.allocate(canvas.width, canvas.height);
 	svgFrame.allocate(canvas.width, canvas.height);
 	svgFrameTop.begin(); {
 		ofClear(255);
 	} svgFrameTop.end();
+
+	svgFrame.allocate(canvas.width, canvas.height);
 	svgFrame.begin(); {
-		ofClear(255);
 		ofPushMatrix(); {
 			ofTranslate(-canvas.x, -canvas.y);
 			float scale = MIN(canvas.width / drawnSvg.getWidth(), canvas.height / drawnSvg.getHeight());
-			ofTranslate(ofGetWidth() / 25 + canvas.width / 2 - (drawnSvg.getWidth()*scale) / 2, ofGetHeight() / 25 + canvas.height / 2 - (drawnSvg.getHeight()*scale) / 2);
+			ofTranslate(ofGetWidth() / 5 + ofGetWidth() / 25 + canvas.width / 2 - (drawnSvg.getWidth()*scale) / 2, ofGetHeight() / 25 + canvas.height / 2 - (drawnSvg.getHeight()*scale) / 2);
 			for (auto path : drawnSvg.getPaths()) {
 				path.setFilled(true);
 				path.setFillColor(ofColor::white);
@@ -504,108 +506,127 @@ void ofApp::dragEvent(ofDragInfo dragInfo) {
 
 }
 
-void ofApp::pickerSelected(const ofColor & color) {
-	currentColor = color;
-}
-
-void ofApp::pickerMoved(const ofColor & color) {
-	movedColor = color;
-}
-
-void ofApp::buttonPressed(const pair<bool, int>& button)
+/// <summary>
+/// Converts a body point to screen space
+/// </summary>
+/// <param name="bodyPoint">body point to tranform</param>
+/// <param name="width">width (in pixels) of output buffer</param>
+/// <param name="height">height (in pixels) of output buffer</param>
+/// <returns>point in screen-space</returns>
+ofPoint ofApp::BodyToScreen(const CameraSpacePoint& bodyPoint, int width, int height)
 {
-	if (button.first) {
-		switch (button.second) {
-		case 1:
-			cursorIcon.load("hand.png");
-			cursorType = HAND;
-			showHover = false;
-			hand.setColor(ofColor::mediumSeaGreen);
-			eraser.setColor(255);
-			//brush.setColor(255);
-			bucket.setColor(255);
-			break;
-		case 2:
-			cursorIcon.load("brush.png");
-			cursorType = BRUSH;
-			showHover = false;
-			hand.setColor(255);
-			eraser.setColor(255);
-			//brush.setColor(ofColor::mediumSeaGreen);
-			bucket.setColor(255);
-			break;
-		case 3:
-			cursorIcon.load("bucket.png");
-			cursorType = BUCKET;
-			showHover = false;
-			hand.setColor(255);
-			eraser.setColor(255);
-			//brush.setColor(255);
-			bucket.setColor(ofColor::mediumSeaGreen);
-			break;
-		case 4:
-			cursorIcon.load("eraser.png");
-			cursorType = ERASER;
-			showHover = false;
-			hand.setColor(255);
-			eraser.setColor(ofColor::mediumSeaGreen);
-			//brush.setColor(255);
-			bucket.setColor(255);
-			break;
-		case 5:
-			currentImage++;
-			currentImage %= dir.numFiles();
-			drawnSvg.load("svgs\\" + dir.getName(currentImage));
-			svgFrameTop.begin(); {
-				ofClear(255);
-			} svgFrameTop.end();
-			layerColors.clear();
-			svgFrame.begin(); {
-				ofClear(255);
-				ofPushMatrix(); {
-					ofTranslate(-canvas.x, -canvas.y);
-					float scale = MIN(canvas.width / drawnSvg.getWidth(), canvas.height / drawnSvg.getHeight());
-					ofTranslate(ofGetWidth() / 25 + canvas.width / 2 - (drawnSvg.getWidth()*scale) / 2, ofGetHeight() / 25 + canvas.height / 2 - (drawnSvg.getHeight()*scale) / 2);
-					for (auto path : drawnSvg.getPaths()) {
-						path.setFilled(true);
-						path.setFillColor(ofColor::white);
-						path.setStrokeWidth(1);
-						path.setStrokeColor(ofColor::black);
-						path.scale(scale, scale);
-						path.draw();
-						layerColors.push_back(ofColor::white);
+	// Calculate the body's position on the screen
+	ColorSpacePoint colorPoint = { 0 };
+	m_pCoordinateMapper->MapCameraPointToColorSpace(bodyPoint, &colorPoint);
+
+	/*An RGB color camera – 640×480 in version 1, 1920×1080 in version 2
+	A depth sensor – 320×240 in v1, 512×424 in v2
+	An infrared sensor – 512×424 in v2*/
+
+	float screenPointX = ofMap(colorPoint.X, 400, 1520, 0, width, true);
+	float screenPointY = ofMap(colorPoint.Y, 400, 900, 0, height, true);
+
+	return ofPoint(screenPointX, screenPointY);
+}
+
+/// <summary>
+/// Initializes the default Kinect sensor
+/// </summary>
+/// <returns>indicates success or failure</returns>
+HRESULT ofApp::InitializeDefaultSensor()
+{
+	HRESULT hr;
+
+	hr = GetDefaultKinectSensor(&m_pKinectSensor);
+	if (FAILED(hr))
+	{
+		ofLogError("No Kinect found!");
+		return hr;
+	}
+
+	if (m_pKinectSensor)
+	{
+		// Initialize the Kinect and get coordinate mapper and the body reader
+		IBodyFrameSource* pBodyFrameSource = NULL;
+
+		hr = m_pKinectSensor->Open();
+
+		if (SUCCEEDED(hr))
+		{
+			hr = m_pKinectSensor->get_CoordinateMapper(&m_pCoordinateMapper);
+		}
+
+		if (SUCCEEDED(hr))
+		{
+			hr = m_pKinectSensor->get_BodyFrameSource(&pBodyFrameSource);
+		}
+
+		if (SUCCEEDED(hr))
+		{
+			hr = pBodyFrameSource->OpenReader(&m_pBodyFrameReader);
+		}
+
+		SafeRelease(pBodyFrameSource);
+	}
+
+	if (!m_pKinectSensor || FAILED(hr))
+	{
+		ofLogError("No ready Kinect found!");
+		return E_FAIL;
+	}
+
+	return hr;
+}
+
+/// <summary>
+/// Handle new body data
+/// <param name="nBodyCount">body data count</param>
+/// <param name="ppBodies">body data in frame</param>
+/// </summary>
+void ofApp::ProcessBody(int nBodyCount, IBody** ppBodies)
+{
+	trackedHandIds.clear();
+	for (int i = 0; i < nBodyCount; ++i)
+	{
+		IBody* pBody = ppBodies[i];
+		if (pBody)
+		{
+			BOOLEAN bTracked = false;
+			HRESULT hr = pBody->get_IsTracked(&bTracked);
+
+			if (SUCCEEDED(hr) && bTracked)
+			{
+				UINT64 id_num = 0;
+				pBody->get_TrackingId(&id_num);
+				trackedHandIds.push_back(id_num);
+				Joint joints[JointType_Count];
+				ofPoint jointPoints[JointType_Count];
+				HandState leftHandState = HandState_Unknown;
+				HandState rightHandState = HandState_Unknown;
+
+				pBody->get_HandLeftState(&leftHandState);
+				pBody->get_HandRightState(&rightHandState);
+
+				hr = pBody->GetJoints(_countof(joints), joints);
+				if (SUCCEEDED(hr))
+				{
+					jointPoints[JointType_HandLeft] = BodyToScreen(joints[JointType_HandLeft].Position, ofGetWidth(), ofGetHeight());
+					jointPoints[JointType_HandRight] = BodyToScreen(joints[JointType_HandRight].Position, ofGetWidth(), ofGetHeight());
+
+					if (hands.count(id_num) > 0) {
+						hands.at(id_num).first.setHandCoordinate(jointPoints[JointType_HandLeft]);
+						hands.at(id_num).first.setHandState(leftHandState);
+						hands.at(id_num).second.setHandCoordinate(jointPoints[JointType_HandRight]);
+						hands.at(id_num).second.setHandState(rightHandState);
 					}
-				} ofPopMatrix();
-			} svgFrame.end();
-			break;
-		case 6:
-			currentImage--;
-			if (currentImage < 0) {
-				currentImage = dir.numFiles() - 1;
+					else {
+						ofLogNotice("Creating new hand with id: " + ofToString(id_num));
+						TrackedHand leftHand = TrackedHand(jointPoints[JointType_HandLeft], leftHandState);
+						TrackedHand rightHand = TrackedHand(jointPoints[JointType_HandRight], rightHandState);
+						hands.emplace(id_num, make_pair(leftHand, rightHand));
+					}
+				}
 			}
-			drawnSvg.load("svgs\\" + dir.getName(currentImage));
-			svgFrameTop.begin(); {
-				ofClear(255);
-			} svgFrameTop.end();
-			layerColors.clear();
-			svgFrame.begin(); {
-				ofClear(255);
-				ofPushMatrix(); {
-					ofTranslate(-canvas.x, -canvas.y);
-					float scale = MIN(canvas.width / drawnSvg.getWidth(), canvas.height / drawnSvg.getHeight());
-					ofTranslate(ofGetWidth() / 25 + canvas.width / 2 - (drawnSvg.getWidth()*scale) / 2, ofGetHeight() / 25 + canvas.height / 2 - (drawnSvg.getHeight()*scale) / 2);
-					for (auto path : drawnSvg.getPaths()) {
-						path.setFilled(true);
-						path.setFillColor(ofColor::white);
-						path.setStrokeWidth(1);
-						path.setStrokeColor(ofColor::black);
-						path.scale(scale, scale);
-						path.draw();
-						layerColors.push_back(ofColor::white);
-					}
-				} ofPopMatrix();
-			} svgFrame.end();
-			break;
 		}
 	}
 }
