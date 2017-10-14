@@ -20,7 +20,7 @@ struct TrackedHand {
 private:
 	ofPoint coordinates;
 	HandState state;
-	int hoverCounter;
+	int hoverCounter, iconSize;
 
 	ofImage cursorIcon;
 
@@ -33,22 +33,27 @@ public:
 	TrackedHand(ofPoint coordinates, HandState state) {
 		cursorType = HAND;
 		currentColor = ofColor(255);
+		iconSize = 35;
 
 		ofImage paintCan;
 		paintCan.load("bucket3.png");
 
 		ofFbo frameBuf = ofFbo();
-		frameBuf.allocate(35, 35);
+		frameBuf.allocate(iconSize, iconSize);
 		frameBuf.begin(); {
-			paintCan.draw(0, 0, 35, 35);
+			paintCan.draw(0, 0, iconSize, iconSize);
 		} frameBuf.end();
 		tex = frameBuf.getTexture();
+
+		cursorIcon.load("hand.png");
 	}
 
 	void TrackedHand::setHandState(HandState new_state) {
-		state = new_state;
-		if (state == HandState_Closed) {
-			hoverCounter = ofGetElapsedTimeMillis();
+		if (new_state != state) {
+			state = new_state;
+			if (state == HandState_Closed) {
+				hoverCounter = ofGetElapsedTimeMillis();
+			}
 		}
 	}
 
@@ -57,7 +62,7 @@ public:
 	}
 
 	void TrackedHand::setHandCoordinate(ofPoint new_coords) {
-		if (new_coords.distance(coordinates) > 5) {
+		if (new_coords.distanceSquared(coordinates) > 100) {
 			hoverCounter = ofGetElapsedTimeMillis();
 		}
 		coordinates = new_coords;
@@ -104,43 +109,62 @@ public:
 			ofSetColor(currentColor);
 			break;
 		}
-		cursorIcon.draw(coordinates, 35, 35);
+		cursorIcon.draw(coordinates, iconSize, iconSize);
 	}
 
 	void TrackedHand::drawHover() {
-		ofPushStyle();
-		ofPushMatrix();
-		ofTranslate(coordinates.x + 17.5, coordinates.y + 17.5, 0);
-		ofSetColor(ofColor::slateGray);
-		ofCircle(0, 0, 30);
-		ofFill();
-		ofSetColor(ofColor::greenYellow);
-		ofBeginShape();
+		ofPushStyle(); {
+			ofPushMatrix(); {
+				ofTranslate(coordinates.x + iconSize / 2.0, coordinates.y + iconSize / 2.0, 0);
+				ofSetColor(ofColor::slateGray);
+				ofCircle(0, 0, 45);
+				ofFill();
+				ofSetColor(ofColor::greenYellow);
+				auto mode = ofGetCurrentRenderer()->getPath().getMode();
+				ofGetCurrentRenderer()->getPath().setMode(ofPath::Mode::POLYLINES);
+				ofBeginShape();
 
+				float angleStep = TWO_PI / 60;
+				float radius = 43;
 
-		float angleStep = TWO_PI / 60;
-		float radius = 28;
-
-		ofVertex(0, 0);
-		for (int i = 0; i < fmod(((ofGetElapsedTimeMillis() - hoverCounter) / 16.3), 61); i++) {
-			float anglef = (i)* angleStep;
-			float x = radius * sin(anglef);
-			float y = radius * -cos(anglef);
-			ofVertex(x, y);
-		}
-		ofVertex(0, 0);
-		ofEndShape(OF_CLOSE);
-		ofPopMatrix();
-		ofPopStyle();
+				ofVertex(0, 0);
+				for (int i = 0; i < fmod(((ofGetElapsedTimeMillis() - hoverCounter) / 16.3 /*1000/60*/), 61); i++) {
+					float anglef = i * angleStep;
+					float x = radius * sin(anglef);
+					float y = radius * -cos(anglef);
+					ofVertex(x, y);
+				}
+				ofVertex(0, 0);
+				ofEndShape(OF_CLOSE);
+				ofGetCurrentRenderer()->getPath().setMode(mode);
+			}ofPopMatrix();
+		} ofPopStyle();
 	}
 
 	void TrackedHand::drawHoverColor(ofColor color) {
-		ofImage img = ofImage("bucket3.png");
-		ofSetColor(255);
-		img.draw(coordinates.x + 7.5, coordinates.y - 42.5, 35, 35);
+		ofSetColor(ofColor::darkGray);
+		ofBeginShape(); {
+			ofVertex(coordinates);
+			ofVertex(coordinates.x + 3, coordinates.y - 42);
+			ofVertex(coordinates.x + 42, coordinates.y - 3);
+		} ofEndShape(OF_CLOSE);
+		ofRectRounded(coordinates.x + 3, coordinates.y - 47, 44, 44, 2);
 		ofSetColor(color);
-		float yprct = 35 * ((ofGetElapsedTimeMillis() - hoverCounter) / 1000.0);
-		tex.drawSubsection(coordinates.x + 7.5, coordinates.y - 42.5 + (35 - yprct), 35, yprct, 0, 35 - yprct);
+		ofRectRounded(coordinates.x + 5, coordinates.y - 45, 40, 40, 2);
+		if (currentColor == color) {
+			ofImage paintCan;
+			paintCan.load("bucket3.png");
+			paintCan.draw(coordinates.x + 7.5, coordinates.y - 42.5, 35, 35);
+		}
+		if (state == HandState_Closed) {
+			ofImage img = ofImage("bucket3.png");
+			ofSetColor(255);
+			img.draw(coordinates.x + 7.5, coordinates.y - 42.5, iconSize, iconSize);
+			ofSetColor(color);
+			float yprct = iconSize * ofClamp(((ofGetElapsedTimeMillis() - hoverCounter) / 1000.0), 0, 1);
+			tex.drawSubsection(coordinates.x + 7.5, coordinates.y - 42.5 + (iconSize - yprct), iconSize, yprct, 0, iconSize - yprct);
+		}
+		
 	}
 
 	int TrackedHand::getHoverCounter() {
@@ -152,7 +176,7 @@ public:
 	}
 
 	void TrackedHand::resetHoverCounter() {
-		hoverCounter = ofGetElapsedTimeMillis() + 666;
+		hoverCounter = (ofGetElapsedTimeMillis() + 666);
 	}
 };
 
@@ -191,8 +215,6 @@ public:
 	ofTrueTypeFont font;
 
 	ofxColorPicker colorPick;
-	void pickerSelected(const ofColor & color);
-	void pickerMoved(const ofColor & color);
 
 	int currentImage;
 
@@ -203,13 +225,12 @@ public:
 	bool hasSetup;
 
 	ofxImgButton hand, bucket, eraser, forward, back, reset;
-	void buttonPressed(const pair<bool, int> & button);
 
 	ofPoint BodyToScreen(const CameraSpacePoint & bodyPoint, int width, int height);
 
 	HRESULT InitializeDefaultSensor();
 
-	void ProcessBody(INT64 nTime, int nBodyCount, IBody ** ppBodies);
+	void ProcessBody(int nBodyCount, IBody ** ppBodies);
 
 	ofRectangle canvas;
 
@@ -228,4 +249,7 @@ public:
 	map<int, pair<TrackedHand, TrackedHand>> hands;
 
 	ofPtr<ofxShivaVGRenderer> shivaRenderer;
+
+	const int cDepthWidth = 512;
+	const int cDepthHeight = 424;
 };
